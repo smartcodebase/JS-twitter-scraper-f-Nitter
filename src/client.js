@@ -284,6 +284,16 @@ export class XClient {
 
   // Auto-refresh wrapper for web operations
   async getUserFollowingWithRefresh(restId, { cursor = '', authToken, ct0 } = {}) {
+    // If no authToken/ct0 provided, get fresh cookies first
+    if (!authToken || !ct0) {
+      if (!this.webCredentials) {
+        throw new Error('Web credentials required for automatic cookie refresh')
+      }
+      console.error('Getting fresh web cookies...')
+      const fresh = await this.getFreshWebCookies()
+      return await this.getUserFollowingWeb(restId, { cursor, ...fresh })
+    }
+    
     try {
       return await this.getUserFollowingWeb(restId, { cursor, authToken, ct0 })
     } catch (e) {
@@ -297,6 +307,16 @@ export class XClient {
   }
 
   async getUserFollowersWithRefresh(restId, { cursor = '', authToken, ct0 } = {}) {
+    // If no authToken/ct0 provided, get fresh cookies first
+    if (!authToken || !ct0) {
+      if (!this.webCredentials) {
+        throw new Error('Web credentials required for automatic cookie refresh')
+      }
+      console.error('Getting fresh web cookies...')
+      const fresh = await this.getFreshWebCookies()
+      return await this.getUserFollowersWeb(restId, { cursor, ...fresh })
+    }
+    
     try {
       return await this.getUserFollowersWeb(restId, { cursor, authToken, ct0 })
     } catch (e) {

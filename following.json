@@ -22,7 +22,7 @@
                 "entries": [
                   {
                     "entryId": "user-247174365",
-                    "sortIndex": "1973301228318228480",
+                    "sortIndex": "1973314036393050112",
                     "content": {
                       "entryType": "TimelineTimelineItem",
                       "__typename": "TimelineTimelineItem",
@@ -122,7 +122,7 @@
                   },
                   {
                     "entryId": "user-1092181103979446272",
-                    "sortIndex": "1973301228318228479",
+                    "sortIndex": "1973314036393050111",
                     "content": {
                       "entryType": "TimelineTimelineItem",
                       "__typename": "TimelineTimelineItem",
@@ -160,13 +160,13 @@
                               },
                               "fast_followers_count": 0,
                               "favourites_count": 1105,
-                              "followers_count": 65364,
+                              "followers_count": 65353,
                               "friends_count": 178,
                               "has_custom_timelines": false,
                               "is_translator": false,
-                              "listed_count": 40,
+                              "listed_count": 0,
                               "media_count": 10,
-                              "normal_followers_count": 65364,
+                              "normal_followers_count": 65353,
                               "pinned_tweet_ids_str": [
                                 "1967716797915787669"
                               ],
@@ -219,7 +219,7 @@
                   },
                   {
                     "entryId": "user-1389231554438836231",
-                    "sortIndex": "1973301228318228478",
+                    "sortIndex": "1973314036393050110",
                     "content": {
                       "entryType": "TimelineTimelineItem",
                       "__typename": "TimelineTimelineItem",
@@ -330,7 +330,7 @@
                   },
                   {
                     "entryId": "user-227513941",
-                    "sortIndex": "1973301228318228477",
+                    "sortIndex": "1973314036393050109",
                     "content": {
                       "entryType": "TimelineTimelineItem",
                       "__typename": "TimelineTimelineItem",
@@ -381,13 +381,13 @@
                               },
                               "fast_followers_count": 0,
                               "favourites_count": 1106,
-                              "followers_count": 128386,
+                              "followers_count": 128388,
                               "friends_count": 275,
                               "has_custom_timelines": true,
                               "is_translator": false,
                               "listed_count": 36,
                               "media_count": 622,
-                              "normal_followers_count": 128386,
+                              "normal_followers_count": 128388,
                               "pinned_tweet_ids_str": [],
                               "possibly_sensitive": false,
                               "profile_banner_url": "https://pbs.twimg.com/profile_banners/227513941/1700040983",
@@ -428,7 +428,7 @@
                   },
                   {
                     "entryId": "user-1659764713616441344",
-                    "sortIndex": "1973301228318228476",
+                    "sortIndex": "1973314036393050108",
                     "content": {
                       "entryType": "TimelineTimelineItem",
                       "__typename": "TimelineTimelineItem",
@@ -489,20 +489,20 @@
                               },
                               "fast_followers_count": 0,
                               "favourites_count": 14632,
-                              "followers_count": 483596,
+                              "followers_count": 483710,
                               "friends_count": 18,
                               "has_custom_timelines": false,
                               "is_translator": false,
                               "listed_count": 506,
-                              "media_count": 1609,
-                              "normal_followers_count": 483596,
+                              "media_count": 1610,
+                              "normal_followers_count": 483710,
                               "pinned_tweet_ids_str": [
                                 "1929485736786416067"
                               ],
                               "possibly_sensitive": false,
                               "profile_banner_url": "https://pbs.twimg.com/profile_banners/1659764713616441344/1737083965",
                               "profile_interstitial_type": "",
-                              "statuses_count": 4066,
+                              "statuses_count": 4067,
                               "translator_type": "none",
                               "url": "https://t.co/6nCGF7fbaB",
                               "want_retweets": true,
@@ -538,22 +538,22 @@
                     }
                   },
                   {
-                    "entryId": "cursor-bottom-1973301228318228475",
-                    "sortIndex": "1973301228318228475",
+                    "entryId": "cursor-bottom-1973314036393050107",
+                    "sortIndex": "1973314036393050107",
                     "content": {
                       "entryType": "TimelineTimelineCursor",
                       "__typename": "TimelineTimelineCursor",
-                      "value": "0|1973301228318228473",
+                      "value": "0|1973314036393050105",
                       "cursorType": "Bottom"
                     }
                   },
                   {
-                    "entryId": "cursor-top-1973301228318228481",
-                    "sortIndex": "1973301228318228481",
+                    "entryId": "cursor-top-1973314036393050113",
+                    "sortIndex": "1973314036393050113",
                     "content": {
                       "entryType": "TimelineTimelineCursor",
                       "__typename": "TimelineTimelineCursor",
-                      "value": "-1|1973301228318228481",
+                      "value": "-1|1973314036393050113",
                       "cursorType": "Top"
                     }
                   }

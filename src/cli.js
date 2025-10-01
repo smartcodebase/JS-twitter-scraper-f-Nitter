@@ -77,12 +77,12 @@ async function main() {
       try {
         data = await client.getUserFollowers(endpoint, user.rest_id, { cursor: argv.cursor })
       } catch (e) {
-        if (argv.webAuthToken && argv.webCt0) {
-          // Option 1: Manual cookies
-          data = await client.getUserFollowersWeb(user.rest_id, { cursor: argv.cursor, authToken: argv.webAuthToken, ct0: argv.webCt0 })
-        } else if (webCredentials) {
+        if (webCredentials) {
           // Option 2: Automatic cookie refresh
           data = await client.getUserFollowersWithRefresh(user.rest_id, { cursor: argv.cursor })
+        } else if (argv.webAuthToken && argv.webCt0) {
+          // Option 1: Manual cookies
+          data = await client.getUserFollowersWeb(user.rest_id, { cursor: argv.cursor, authToken: argv.webAuthToken, ct0: argv.webCt0 })
         } else {
           throw e
         }
@@ -93,12 +93,12 @@ async function main() {
       try {
         data = await client.getUserFollowing(endpoint, user.rest_id, { cursor: argv.cursor })
       } catch (e) {
-        if (argv.webAuthToken && argv.webCt0) {
-          // Option 1: Manual cookies
-          data = await client.getUserFollowingWeb(user.rest_id, { cursor: argv.cursor, authToken: argv.webAuthToken, ct0: argv.webCt0 })
-        } else if (webCredentials) {
+        if (webCredentials) {
           // Option 2: Automatic cookie refresh
           data = await client.getUserFollowingWithRefresh(user.rest_id, { cursor: argv.cursor })
+        } else if (argv.webAuthToken && argv.webCt0) {
+          // Option 1: Manual cookies
+          data = await client.getUserFollowingWeb(user.rest_id, { cursor: argv.cursor, authToken: argv.webAuthToken, ct0: argv.webCt0 })
         } else {
           throw e
         }
