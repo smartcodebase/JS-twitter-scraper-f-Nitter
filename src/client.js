@@ -27,13 +27,12 @@ export const WEB_ENDPOINTS = {
 }
 
 export class XClient {
-  constructor({ consumerKey, consumerSecret, oauthToken, oauthTokenSecret, sessionPool, webCredentials } = {}) {
+  constructor({ consumerKey, consumerSecret, oauthToken, oauthTokenSecret, sessionPool } = {}) {
     this.consumerKey = consumerKey
     this.consumerSecret = consumerSecret
     this.oauthToken = oauthToken
     this.oauthTokenSecret = oauthTokenSecret
     this.sessionPool = Array.isArray(sessionPool) ? sessionPool.slice() : null
-    this.webCredentials = webCredentials // { username, password, otpSecret? }
 
     this.oauth = new OAuth({
       consumer: { key: consumerKey, secret: consumerSecret },
@@ -275,238 +274,12 @@ export class XClient {
     }
   }
 
-  // ===== Automatic cookie refresh via Puppeteer =====
+  // ===== Cookie extraction from existing Chrome session =====
   async getFreshWebCookies() {
-    // First try to get cookies from existing Chrome session
-    try {
-      console.error('Attempting to extract cookies from existing Chrome session...')
-      return await this.getCookiesFromExistingChrome()
-    } catch (e) {
-      console.error('Failed to extract from existing Chrome session:', e.message)
-      console.error('Falling back to automated login...')
-    }
-
-    if (!this.webCredentials) {
-      throw new Error('Web credentials required for automatic cookie refresh when no existing Chrome session is available')
-    }
-
-    console.error('Launching browser for cookie refresh...')
-    const browser = await puppeteer.launch({ 
-      headless: false, // Run in non-headless mode to see what's happening
-      args: [
-        '--no-sandbox', 
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage',
-        '--disable-accelerated-2d-canvas',
-        '--no-first-run',
-        '--no-zygote',
-        '--disable-gpu',
-        '--disable-blink-features=AutomationControlled',
-        '--disable-features=VizDisplayCompositor'
-      ]
-    })
-    
-    try {
-      const page = await browser.newPage()
-      await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36')
-      
-      // Add stealth measures
-      await page.evaluateOnNewDocument(() => {
-        Object.defineProperty(navigator, 'webdriver', {
-          get: () => undefined,
-        })
-      })
-      
-      // Set viewport
-      await page.setViewport({ width: 1366, height: 768 })
-      
-      // Set a global timeout for the entire operation
-      const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('Cookie refresh timeout after 2 minutes')), 120000)
-      })
-      
-      const cookiePromise = this._performLogin(page)
-      
-      const result = await Promise.race([cookiePromise, timeoutPromise])
-      return result
-    } finally {
-      await browser.close()
-    }
+    console.error('Attempting to extract cookies from existing Chrome session...')
+    return await this.getCookiesFromExistingChrome()
   }
 
-  async _performLogin(page) {
-    console.error('Navigating to X.com homepage...')
-    await page.goto('https://x.com/', { waitUntil: 'networkidle2', timeout: 30000 })
-    
-    // Wait for the page to fully load
-    await new Promise(resolve => setTimeout(resolve, 3000))
-    
-    // Take a screenshot for debugging
-    await page.screenshot({ path: 'login-page.png' })
-    console.error('Screenshot saved as login-page.png')
-    
-    console.error('Looking for Sign In button...')
-    // Try multiple selectors for Sign In button
-    const signInSelectors = [
-      'a[href="/login"]',
-      '[data-testid="loginButton"]',
-      'a:has-text("Sign in")',
-      'button:has-text("Sign in")',
-      '[role="link"]:has-text("Sign in")'
-    ]
-    
-    let signInButton = null
-    for (const selector of signInSelectors) {
-      try {
-        signInButton = await page.waitForSelector(selector, { timeout: 5000 })
-        if (signInButton) {
-          console.error(`Found Sign In button with selector: ${selector}`)
-          break
-        }
-      } catch (e) {
-        console.error(`Sign In button selector ${selector} failed:`, e.message)
-      }
-    }
-    
-    if (!signInButton) {
-      throw new Error('Could not find Sign In button')
-    }
-    
-    console.error('Clicking Sign In button...')
-    await signInButton.click()
-    
-    // Wait for the modal to appear
-    await new Promise(resolve => setTimeout(resolve, 3000))
-    
-    console.error('Looking for username input in modal...')
-    // Try multiple selectors for username input in the modal
-    const usernameSelectors = [
-      'input[placeholder*="Phone, email, or username" i]',
-      'input[name="text"]',
-      'input[autocomplete="username"]',
-      'input[type="text"]'
-    ]
-    
-    let usernameInput = null
-    for (const selector of usernameSelectors) {
-      try {
-        usernameInput = await page.waitForSelector(selector, { timeout: 10000 })
-        if (usernameInput) {
-          console.error(`Found username input with selector: ${selector}`)
-          break
-        }
-      } catch (e) {
-        console.error(`Username input selector ${selector} failed:`, e.message)
-      }
-    }
-    
-    if (!usernameInput) {
-      throw new Error('Could not find username input field in modal')
-    }
-    
-    console.error('Typing username...')
-    await usernameInput.type(this.webCredentials.username)
-    
-    console.error('Looking for Next button in modal...')
-    // Try multiple selectors for Next button in the modal
-    const nextSelectors = [
-      'button:has-text("Next")',
-      '[role="button"]:has-text("Next")',
-      'button[type="button"]:has-text("Next")',
-      'span:has-text("Next")'
-    ]
-    
-    let nextButton = null
-    for (const selector of nextSelectors) {
-      try {
-        nextButton = await page.waitForSelector(selector, { timeout: 5000 })
-        if (nextButton) {
-          console.error(`Found Next button with selector: ${selector}`)
-          break
-        }
-      } catch (e) {
-        console.error(`Next button selector ${selector} failed:`, e.message)
-      }
-    }
-    
-    if (nextButton) {
-      console.error('Clicking Next button...')
-      await nextButton.click()
-    } else {
-      // Try pressing Enter as fallback
-      console.error('Next button not found, trying Enter key...')
-      await usernameInput.press('Enter')
-    }
-    
-    // Wait for the next step (password input)
-    await new Promise(resolve => setTimeout(resolve, 3000))
-    
-    console.error('Looking for password input...')
-    await page.waitForSelector('input[name="password"]', { timeout: 15000 })
-    await page.type('input[name="password"]', this.webCredentials.password)
-    
-    console.error('Looking for login button...')
-    // Try multiple selectors for login button
-    const loginSelectors = [
-      '[data-testid="LoginForm_Login_Button"]',
-      'button:has-text("Log in")',
-      'button[type="submit"]',
-      '[role="button"]:has-text("Log in")'
-    ]
-    
-    let loginButton = null
-    for (const selector of loginSelectors) {
-      try {
-        loginButton = await page.waitForSelector(selector, { timeout: 5000 })
-        if (loginButton) {
-          console.error(`Found login button with selector: ${selector}`)
-          break
-        }
-      } catch (e) {
-        console.error(`Login button selector ${selector} failed:`, e.message)
-      }
-    }
-    
-    if (loginButton) {
-      console.error('Clicking login button...')
-      await loginButton.click()
-    } else {
-      // Try pressing Enter as fallback
-      console.error('Login button not found, trying Enter key...')
-      await page.keyboard.press('Enter')
-    }
-    
-    // Handle 2FA if needed
-    if (this.webCredentials.otpSecret) {
-      try {
-        console.error('Looking for 2FA input...')
-        await page.waitForSelector('input[data-testid="ocfEnterTextTextInput"]', { timeout: 10000 })
-        const { authenticator } = await import('otplib')
-        const token = authenticator.generate(this.webCredentials.otpSecret)
-        await page.type('input[data-testid="ocfEnterTextTextInput"]', token)
-        await page.click('[data-testid="ocfEnterTextNextButton"]')
-        console.error('2FA code entered')
-      } catch (e) {
-        console.error('No 2FA required or 2FA failed:', e.message)
-      }
-    }
-    
-    console.error('Waiting for login to complete...')
-    await page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 30000 })
-    
-    console.error('Extracting cookies...')
-    const cookies = await page.cookies()
-    const authToken = cookies.find(c => c.name === 'auth_token')?.value
-    const ct0 = cookies.find(c => c.name === 'ct0')?.value
-    
-    if (!authToken || !ct0) {
-      console.error('Available cookies:', cookies.map(c => c.name))
-      throw new Error('Failed to extract auth_token or ct0 from cookies')
-    }
-    
-    console.error('Successfully obtained fresh cookies')
-    return { authToken, ct0 }
-  }
 
   // Auto-refresh wrapper for web operations
   async getUserFollowingWithRefresh(restId, { cursor = '', authToken, ct0 } = {}) {

@@ -36,11 +36,8 @@ async function main() {
       .option('following', { type: 'boolean', describe: 'Fetch following list (GraphQL)' })
       .option('followersEndpoint', { type: 'string', describe: 'Override Followers GraphQL URL (optional)' })
       .option('followingEndpoint', { type: 'string', describe: 'Override Following GraphQL URL (optional)' })
-      .option('webAuthToken', { type: 'string', describe: 'Web cookie auth_token for OAuth2Session (optional fallback)' })
-      .option('webCt0', { type: 'string', describe: 'Web cookie ct0 for OAuth2Session (optional fallback)' })
-      .option('webUsername', { type: 'string', describe: 'X username for automatic cookie refresh (Option 2)' })
-      .option('webPassword', { type: 'string', describe: 'X password for automatic cookie refresh (Option 2)' })
-      .option('webOtpSecret', { type: 'string', describe: '2FA TOTP secret for automatic cookie refresh (optional)' })
+      .option('webAuthToken', { type: 'string', describe: 'Web cookie auth_token for OAuth2Session (Option 1)' })
+      .option('webCt0', { type: 'string', describe: 'Web cookie ct0 for OAuth2Session (Option 1)' })
     )
     .help()
     .parse()
@@ -53,17 +50,7 @@ async function main() {
     }).filter(Boolean)
   }
 
-  // Setup web credentials for automatic cookie refresh (Option 2)
-  let webCredentials = null
-  if (argv.webUsername && argv.webPassword) {
-    webCredentials = {
-      username: argv.webUsername,
-      password: argv.webPassword,
-      otpSecret: argv.webOtpSecret
-    }
-  }
-
-  const client = new XClient({ ...getConfig(), sessionPool, webCredentials })
+  const client = new XClient({ ...getConfig(), sessionPool })
   let user = await client.getUserByScreenName(argv.username)
   if (!user || !user.rest_id) {
     // Try People search to resolve rest_id for very new accounts
@@ -84,16 +71,10 @@ async function main() {
           // Option 1: Manual web cookies
           console.error('Using provided web cookies...')
           data = await client.getUserFollowersWeb(user.rest_id, { cursor: argv.cursor, authToken: argv.webAuthToken, ct0: argv.webCt0 })
-        } else if (webCredentials || true) {
-          // Option 2: Automatic cookie refresh (try existing Chrome session first)
-          console.error('Falling back to web authentication...')
-          data = await client.getUserFollowersWithRefresh(user.rest_id, { cursor: argv.cursor })
         } else {
-          console.error('No fallback options available. Please provide either:')
-          console.error('1. OAuth credentials in .env file, or')
-          console.error('2. Web credentials (--webUsername, --webPassword), or')
-          console.error('3. Manual web cookies (--webAuthToken, --webCt0)')
-          throw e
+          // Option 2: Automatic cookie extraction from Chrome session
+          console.error('Falling back to Chrome cookie extraction...')
+          data = await client.getUserFollowersWithRefresh(user.rest_id, { cursor: argv.cursor })
         }
       }
     } else {
@@ -109,16 +90,10 @@ async function main() {
           // Option 1: Manual web cookies
           console.error('Using provided web cookies...')
           data = await client.getUserFollowingWeb(user.rest_id, { cursor: argv.cursor, authToken: argv.webAuthToken, ct0: argv.webCt0 })
-        } else if (webCredentials || true) {
-          // Option 2: Automatic cookie refresh (try existing Chrome session first)
-          console.error('Falling back to web authentication...')
-          data = await client.getUserFollowingWithRefresh(user.rest_id, { cursor: argv.cursor })
         } else {
-          console.error('No fallback options available. Please provide either:')
-          console.error('1. OAuth credentials in .env file, or')
-          console.error('2. Web credentials (--webUsername, --webPassword), or')
-          console.error('3. Manual web cookies (--webAuthToken, --webCt0)')
-          throw e
+          // Option 2: Automatic cookie extraction from Chrome session
+          console.error('Falling back to Chrome cookie extraction...')
+          data = await client.getUserFollowingWithRefresh(user.rest_id, { cursor: argv.cursor })
         }
       }
     }
