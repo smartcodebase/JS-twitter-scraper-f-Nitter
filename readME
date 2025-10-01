@@ -13,3 +13,28 @@ Message: "Falling back to web authentication..." → "Attempting to extract cook
 
 node src/cli.js webcupid95625 --following \
   --out following.json
+
+
+
+✅ Yes, the system automatically gets new cookies when Twitter changes them!
+Here's exactly what happens:
+Scenario 1: Invalid/Corrupted Cookie File
+    System tries to load cookies from file
+    File is corrupted/invalid → "Failed to load cookies from file"
+    Automatically falls back: Extracts fresh cookies from Chrome
+    Saves new cookies: Updates the file with valid cookies
+Scenario 2: Valid File but Expired Cookies (401 Error)
+    System loads cookies from file successfully
+    Makes API call with cached cookies
+    API returns 401 (Unauthorized) because Twitter changed cookies
+    Automatic recovery: Calls refreshCookiesFromChrome()
+    Gets fresh cookies: Extracts new cookies from Chrome
+    Retries API call: Uses the new valid cookies
+    Updates cache: Saves new cookies to file
+The Complete Flow:
+Key Benefits:
+Automatic Recovery: No manual intervention needed
+Always Works: Even if Twitter changes cookies frequently
+Efficient: Only connects to Chrome when necessary
+Persistent: Saves working cookies for future use
+So yes, when Twitter changes cookies and the API fails, the system will automatically detect this and get fresh cookies from your Chrome session! 🎉

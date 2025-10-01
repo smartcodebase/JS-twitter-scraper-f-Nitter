@@ -3,6 +3,8 @@ import OAuth from 'oauth-1.0a'
 import { request } from 'undici'
 import { gunzipSync, brotliDecompressSync, inflateSync } from 'zlib'
 import puppeteer from 'puppeteer'
+import { writeFile, readFile } from 'fs/promises'
+import { existsSync } from 'fs'
 
 const GQL_BASE = 'https://api.x.com/graphql'
 const WEB_GQL_BASE = 'https://x.com/i/api/graphql'
@@ -33,6 +35,9 @@ export class XClient {
     this.oauthToken = oauthToken
     this.oauthTokenSecret = oauthTokenSecret
     this.sessionPool = Array.isArray(sessionPool) ? sessionPool.slice() : null
+    this.cachedCookies = null
+    this.cookieCacheTime = null
+    this.cookieCacheDuration = 30 * 60 * 1000 // 30 minutes
 
     this.oauth = new OAuth({
       consumer: { key: consumerKey, secret: consumerSecret },
@@ -226,6 +231,10 @@ export class XClient {
   async getCookiesFromExistingChrome() {
     console.error('Connecting to existing Chrome session...')
     
+    // Add random delay to avoid detection patterns
+    const delay = Math.random() * 2000 + 1000 // 1-3 seconds
+    await new Promise(resolve => setTimeout(resolve, delay))
+    
     // Try to connect to existing Chrome instance
     const browser = await puppeteer.connect({
       browserURL: 'http://localhost:9222', // Default Chrome debugging port
@@ -276,26 +285,111 @@ export class XClient {
 
   // ===== Cookie extraction from existing Chrome session =====
   async getFreshWebCookies() {
-    console.error('Attempting to extract cookies from existing Chrome session...')
-    return await this.getCookiesFromExistingChrome()
+    // Check if we have cached cookies that are still valid
+    if (this.cachedCookies && this.cookieCacheTime) {
+      const now = Date.now()
+      const timeSinceLastExtraction = now - this.cookieCacheTime
+      
+      if (timeSinceLastExtraction < this.cookieCacheDuration) {
+        console.error('Using cached cookies (age:', Math.round(timeSinceLastExtraction / 1000), 'seconds)')
+        return this.cachedCookies
+      }
+    }
+
+    // Try to load cookies from file first
+    const fileCookies = await this.loadCookiesFromFile()
+    if (fileCookies) {
+      console.error('Using cookies from file')
+      this.cachedCookies = fileCookies
+      this.cookieCacheTime = Date.now()
+      return fileCookies
+    }
+
+    // No cached cookies available, extract fresh ones from Chrome
+    console.error('No cached cookies found, extracting fresh cookies from Chrome session...')
+    const freshCookies = await this.getCookiesFromExistingChrome()
+    
+    // Cache the fresh cookies
+    this.cachedCookies = freshCookies
+    this.cookieCacheTime = Date.now()
+    
+    // Save cookies to file for future use
+    await this.saveCookiesToFile(freshCookies)
+    
+    return freshCookies
+  }
+
+  // Method to force refresh cookies (called when API fails)
+  async refreshCookiesFromChrome() {
+    console.error('Forcing fresh cookie extraction from Chrome session...')
+    const freshCookies = await this.getCookiesFromExistingChrome()
+    
+    // Update cache
+    this.cachedCookies = freshCookies
+    this.cookieCacheTime = Date.now()
+    
+    // Save to file
+    await this.saveCookiesToFile(freshCookies)
+    
+    return freshCookies
+  }
+
+  async saveCookiesToFile(cookies) {
+    try {
+      const cookieData = {
+        authToken: cookies.authToken,
+        ct0: cookies.ct0,
+        timestamp: Date.now()
+      }
+      await writeFile('cookies.json', JSON.stringify(cookieData, null, 2))
+      console.error('Cookies saved to cookies.json')
+    } catch (e) {
+      console.error('Failed to save cookies to file:', e.message)
+    }
+  }
+
+  async loadCookiesFromFile() {
+    try {
+      if (!existsSync('cookies.json')) {
+        return null
+      }
+      
+      const cookieData = JSON.parse(await readFile('cookies.json', 'utf8'))
+      const now = Date.now()
+      const cookieAge = now - cookieData.timestamp
+      
+      // Only use cookies if they're less than 2 hours old
+      if (cookieAge < 2 * 60 * 60 * 1000) {
+        return {
+          authToken: cookieData.authToken,
+          ct0: cookieData.ct0
+        }
+      }
+      
+      console.error('Cookies in file are too old, ignoring')
+      return null
+    } catch (e) {
+      console.error('Failed to load cookies from file:', e.message)
+      return null
+    }
   }
 
 
   // Auto-refresh wrapper for web operations
   async getUserFollowingWithRefresh(restId, { cursor = '', authToken, ct0 } = {}) {
-    // If no authToken/ct0 provided, get fresh cookies first
+    // If no authToken/ct0 provided, try cached cookies first
     if (!authToken || !ct0) {
-      console.error('Getting fresh web cookies...')
-      const fresh = await this.getFreshWebCookies()
-      return await this.getUserFollowingWeb(restId, { cursor, ...fresh })
+      console.error('Getting web cookies...')
+      const cookies = await this.getFreshWebCookies()
+      return await this.getUserFollowingWeb(restId, { cursor, ...cookies })
     }
     
     try {
       return await this.getUserFollowingWeb(restId, { cursor, authToken, ct0 })
     } catch (e) {
       if (e.statusCode === 401) {
-        console.error('Web session expired, refreshing cookies...')
-        const fresh = await this.getFreshWebCookies()
+        console.error('API failed with 401, refreshing cookies from Chrome...')
+        const fresh = await this.refreshCookiesFromChrome()
         return await this.getUserFollowingWeb(restId, { cursor, ...fresh })
       }
       throw e
@@ -303,19 +397,19 @@ export class XClient {
   }
 
   async getUserFollowersWithRefresh(restId, { cursor = '', authToken, ct0 } = {}) {
-    // If no authToken/ct0 provided, get fresh cookies first
+    // If no authToken/ct0 provided, try cached cookies first
     if (!authToken || !ct0) {
-      console.error('Getting fresh web cookies...')
-      const fresh = await this.getFreshWebCookies()
-      return await this.getUserFollowersWeb(restId, { cursor, ...fresh })
+      console.error('Getting web cookies...')
+      const cookies = await this.getFreshWebCookies()
+      return await this.getUserFollowersWeb(restId, { cursor, ...cookies })
     }
     
     try {
       return await this.getUserFollowersWeb(restId, { cursor, authToken, ct0 })
     } catch (e) {
       if (e.statusCode === 401) {
-        console.error('Web session expired, refreshing cookies...')
-        const fresh = await this.getFreshWebCookies()
+        console.error('API failed with 401, refreshing cookies from Chrome...')
+        const fresh = await this.refreshCookiesFromChrome()
         return await this.getUserFollowersWeb(restId, { cursor, ...fresh })
       }
       throw e

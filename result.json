@@ -14,7 +14,7 @@
                 "entries": [
                   {
                     "entryId": "tweet-1972708645755613319",
-                    "sortIndex": "1973278249857318912",
+                    "sortIndex": "1973463933893214208",
                     "content": {
                       "__typename": "TimelineTimelineItem",
                       "content": {
@@ -119,13 +119,115 @@
                     }
                   },
                   {
-                    "entryId": "who-to-follow-1973278249857318913",
-                    "sortIndex": "1973278249857318911",
+                    "entryId": "who-to-follow-1973463933893214209",
+                    "sortIndex": "1973463933893214207",
                     "content": {
                       "__typename": "TimelineTimelineModule",
                       "items": [
                         {
-                          "entryId": "who-to-follow-1973278249857318913-user-2347578973",
+                          "entryId": "who-to-follow-1973463933893214209-user-44196397",
+                          "item": {
+                            "content": {
+                              "__typename": "TimelineUser",
+                              "userResult": {
+                                "result": {
+                                  "__typename": "User",
+                                  "rest_id": "44196397",
+                                  "is_blue_verified": true,
+                                  "affiliates_highlighted_label": {
+                                    "label": {
+                                      "url": {
+                                        "urlType": "DeepLink",
+                                        "url": "https://twitter.com/X"
+                                      },
+                                      "badge": {
+                                        "url": "https://pbs.twimg.com/profile_images/1955359038532653056/OSHY3ewP_bigger.jpg"
+                                      },
+                                      "userLabelType": "BusinessLabel",
+                                      "userLabelDisplayType": "Badge",
+                                      "description": "X"
+                                    }
+                                  },
+                                  "legacy": {
+                                    "can_dm": false,
+                                    "can_media_tag": false,
+                                    "advertiser_account_service_levels": [
+                                      "smb"
+                                    ],
+                                    "advertiser_account_type": "promotable_user",
+                                    "analytics_type": "enabled",
+                                    "created_at": "Tue Jun 02 20:12:29 +0000 2009",
+                                    "description": "https://t.co/9qhgzJ69UQ",
+                                    "entities": {
+                                      "description": {
+                                        "hashtags": [],
+                                        "symbols": [],
+                                        "urls": [
+                                          {
+                                            "display_url": "votetesla.com",
+                                            "expanded_url": "https://www.votetesla.com",
+                                            "indices": [
+                                              0,
+                                              23
+                                            ],
+                                            "url": "https://t.co/9qhgzJ69UQ"
+                                          }
+                                        ],
+                                        "user_mentions": []
+                                      }
+                                    },
+                                    "fast_followers_count": 0,
+                                    "favourites_count": 174738,
+                                    "followers_count": 226965807,
+                                    "friends_count": 1217,
+                                    "geo_enabled": true,
+                                    "has_custom_timelines": true,
+                                    "has_extended_profile": true,
+                                    "id_str": "44196397",
+                                    "is_translator": false,
+                                    "location": "",
+                                    "media_count": 4162,
+                                    "name": "Elon Musk",
+                                    "normal_followers_count": 226965807,
+                                    "pinned_tweet_ids_str": [
+                                      "1973288477988143277"
+                                    ],
+                                    "profile_background_color": "C0DEED",
+                                    "profile_banner_url": "https://pbs.twimg.com/profile_banners/44196397/1739948056",
+                                    "profile_image_url_https": "https://pbs.twimg.com/profile_images/1936002956333080576/kqqe2iWO_normal.jpg",
+                                    "profile_interstitial_type": "",
+                                    "profile_link_color": "0084B4",
+                                    "protected": false,
+                                    "screen_name": "elonmusk",
+                                    "statuses_count": 86708,
+                                    "translator_type_enum": "None",
+                                    "verified": false,
+                                    "withheld_in_countries": []
+                                  }
+                                }
+                              },
+                              "userDisplayType": "User",
+                              "socialContext": {
+                                "__typename": "TimelineGeneralContext",
+                                "contextType": "Follow",
+                                "text": "Beni Rae Harmony follows"
+                              }
+                            },
+                            "clientEventInfo": {
+                              "component": "suggest_who_to_follow",
+                              "element": "user",
+                              "details": {
+                                "timelinesDetails": {
+                                  "injectionType": "WhoToFollow",
+                                  "controllerData": "DAACDAACDAABCgABAAAAAAAAABAAAAAA",
+                                  "sourceData": "DAABCgABBZUxqlthurkKAAIAAAAAAAAAAAAIAAIAAAC0CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAQAAAAAAA="
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "entryId": "who-to-follow-1973463933893214209-user-2347578973",
                           "item": {
                             "content": {
                               "__typename": "TimelineUser",
@@ -168,7 +270,7 @@
                                     },
                                     "fast_followers_count": 0,
                                     "favourites_count": 6370,
-                                    "followers_count": 509931,
+                                    "followers_count": 509911,
                                     "friends_count": 18,
                                     "geo_enabled": true,
                                     "has_custom_timelines": true,
@@ -178,7 +280,7 @@
                                     "location": "",
                                     "media_count": 344,
                                     "name": "𐕣",
-                                    "normal_followers_count": 509931,
+                                    "normal_followers_count": 509911,
                                     "pinned_tweet_ids_str": [],
                                     "profile_background_color": "000000",
                                     "profile_banner_url": "https://pbs.twimg.com/profile_banners/2347578973/1743726254",
@@ -204,144 +306,42 @@
                                 "timelinesDetails": {
                                   "injectionType": "WhoToFollow",
                                   "controllerData": "DAACDAACDAABCgABAAAAAAAAAAgAAAAA",
-                                  "sourceData": "DAABCgABsO4m+0XxkqsKAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
+                                  "sourceData": "DAABCgABBZUxqlthurkKAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
                                 }
                               }
                             }
                           }
                         },
                         {
-                          "entryId": "who-to-follow-1973278249857318913-user-1483866479279759362",
+                          "entryId": "who-to-follow-1973463933893214209-user-713788965",
                           "item": {
                             "content": {
                               "__typename": "TimelineUser",
                               "userResult": {
                                 "result": {
                                   "__typename": "User",
-                                  "rest_id": "1483866479279759362",
-                                  "is_blue_verified": true,
+                                  "rest_id": "713788965",
+                                  "is_blue_verified": false,
                                   "affiliates_highlighted_label": {},
                                   "legacy": {
                                     "can_dm": true,
-                                    "can_media_tag": true,
-                                    "advertiser_account_service_levels": [
-                                      "analytics"
-                                    ],
-                                    "advertiser_account_type": "promotable_user",
-                                    "analytics_type": "disabled",
-                                    "created_at": "Wed Jan 19 18:18:43 +0000 2022",
-                                    "description": "Learn seduction and game. Get a girl. Or many. Become the man you should be. Creator of @Flirtingbot",
-                                    "entities": {
-                                      "url": {
-                                        "urls": [
-                                          {
-                                            "display_url": "bio.link/seducehertoday",
-                                            "expanded_url": "https://bio.link/seducehertoday",
-                                            "indices": [
-                                              0,
-                                              23
-                                            ],
-                                            "url": "https://t.co/3ibUkBEEdZ"
-                                          }
-                                        ]
-                                      },
-                                      "description": {
-                                        "hashtags": [],
-                                        "symbols": [],
-                                        "urls": [],
-                                        "user_mentions": [
-                                          {
-                                            "id_str": "0",
-                                            "indices": [
-                                              88,
-                                              100
-                                            ],
-                                            "name": "",
-                                            "screen_name": "Flirtingbot"
-                                          }
-                                        ]
-                                      }
-                                    },
-                                    "fast_followers_count": 0,
-                                    "favourites_count": 66843,
-                                    "followers_count": 224550,
-                                    "friends_count": 264,
-                                    "geo_enabled": true,
-                                    "has_custom_timelines": true,
-                                    "has_extended_profile": true,
-                                    "id_str": "1483866479279759362",
-                                    "is_translator": false,
-                                    "location": "Get Hotter Girls 👉",
-                                    "media_count": 1328,
-                                    "name": "Seduce Her Today 💦💦",
-                                    "normal_followers_count": 224550,
-                                    "pinned_tweet_ids_str": [
-                                      "1943316991416373677"
-                                    ],
-                                    "profile_background_color": "F5F8FA",
-                                    "profile_banner_url": "https://pbs.twimg.com/profile_banners/1483866479279759362/1679424192",
-                                    "profile_image_url_https": "https://pbs.twimg.com/profile_images/1491830873607393281/_9ptc-Xk_normal.jpg",
-                                    "profile_interstitial_type": "",
-                                    "profile_link_color": "1DA1F2",
-                                    "protected": false,
-                                    "screen_name": "SeduceHerToday",
-                                    "statuses_count": 20020,
-                                    "translator_type_enum": "None",
-                                    "url": "https://t.co/3ibUkBEEdZ",
-                                    "verified": false,
-                                    "withheld_in_countries": []
-                                  }
-                                }
-                              },
-                              "userDisplayType": "User"
-                            },
-                            "clientEventInfo": {
-                              "component": "suggest_who_to_follow",
-                              "element": "user",
-                              "details": {
-                                "timelinesDetails": {
-                                  "injectionType": "WhoToFollow",
-                                  "controllerData": "DAACDAACDAABCgABAAAAAAAAAAgAAAAA",
-                                  "sourceData": "DAABCgABsO4m+0XxkqsKAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
-                                }
-                              }
-                            }
-                          }
-                        },
-                        {
-                          "entryId": "who-to-follow-1973278249857318913-user-4898921697",
-                          "item": {
-                            "content": {
-                              "__typename": "TimelineUser",
-                              "userResult": {
-                                "result": {
-                                  "__typename": "User",
-                                  "rest_id": "4898921697",
-                                  "is_blue_verified": true,
-                                  "affiliates_highlighted_label": {},
-                                  "legacy": {
-                                    "can_dm": true,
-                                    "can_media_tag": true,
-                                    "advertiser_account_service_levels": [
-                                      "dso",
-                                      "dso",
-                                      "smb"
-                                    ],
+                                    "can_media_tag": false,
+                                    "advertiser_account_service_levels": [],
                                     "advertiser_account_type": "promotable_user",
                                     "analytics_type": "enabled",
-                                    "created_at": "Thu Feb 11 19:24:43 +0000 2016",
-                                    "description": "ROAD TO PARADISE STARTS NOW... 8/8\n\nBooking & Inquiries: BookYoungNudy@gmail.com",
+                                    "created_at": "Mon Oct 14 04:44:44 +0000 2013",
+                                    "description": "Gods Favorite Child",
                                     "entities": {
                                       "url": {
                                         "urls": [
                                           {
-                                            "display_url": "youngnudy.lnk.to/Paradise",
-                                            "expanded_url": "https://youngnudy.lnk.to/Paradise",
+                                            "display_url": "m.youtube.com/watch?v=Ft1Fcg…",
+                                            "expanded_url": "https://m.youtube.com/watch?v=Ft1Fcg_r_qw",
                                             "indices": [
                                               0,
                                               23
                                             ],
-                                            "url": "https://t.co/5nYdoCtKOY"
+                                            "url": "https://t.co/rLhAg2CAc8"
                                           }
                                         ]
                                       },
@@ -353,31 +353,31 @@
                                       }
                                     },
                                     "fast_followers_count": 0,
-                                    "favourites_count": 792,
-                                    "followers_count": 259282,
-                                    "friends_count": 70,
+                                    "favourites_count": 4468,
+                                    "followers_count": 121649,
+                                    "friends_count": 972,
                                     "geo_enabled": true,
                                     "has_custom_timelines": true,
                                     "has_extended_profile": true,
-                                    "id_str": "4898921697",
+                                    "id_str": "713788965",
                                     "is_translator": false,
-                                    "location": "East Atlanta",
-                                    "media_count": 562,
-                                    "name": "Big Bad Slime",
-                                    "normal_followers_count": 259282,
+                                    "location": "New Orleans, LA",
+                                    "media_count": 700,
+                                    "name": "KRAZYMAN",
+                                    "normal_followers_count": 121649,
                                     "pinned_tweet_ids_str": [
-                                      "1953698045775814779"
+                                      "1968899740491206741"
                                     ],
-                                    "profile_background_color": "F5F8FA",
-                                    "profile_banner_url": "https://pbs.twimg.com/profile_banners/4898921697/1752825823",
-                                    "profile_image_url_https": "https://pbs.twimg.com/profile_images/1856826988758986752/0g84k__W_normal.jpg",
+                                    "profile_background_color": "C0DEED",
+                                    "profile_banner_url": "https://pbs.twimg.com/profile_banners/713788965/1757307879",
+                                    "profile_image_url_https": "https://pbs.twimg.com/profile_images/1964917723307102208/icxDLT_1_normal.jpg",
                                     "profile_interstitial_type": "",
                                     "profile_link_color": "1DA1F2",
                                     "protected": false,
-                                    "screen_name": "PDE_YOUNGNUDY",
-                                    "statuses_count": 2647,
+                                    "screen_name": "rob49up",
+                                    "statuses_count": 25616,
                                     "translator_type_enum": "None",
-                                    "url": "https://t.co/5nYdoCtKOY",
+                                    "url": "https://t.co/rLhAg2CAc8",
                                     "verified": false,
                                     "withheld_in_countries": []
                                   }
@@ -392,7 +392,7 @@
                                 "timelinesDetails": {
                                   "injectionType": "WhoToFollow",
                                   "controllerData": "DAACDAACDAABCgABAAAAAAAAAAgAAAAA",
-                                  "sourceData": "DAABCgABsO4m+0XxkqsKAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
+                                  "sourceData": "DAABCgABBZUxqlthurkKAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
                                 }
                               }
                             }
@@ -417,28 +417,28 @@
                         "details": {
                           "timelinesDetails": {
                             "injectionType": "WhoToFollow",
-                            "controllerData": "DAACDAACDAABCgABAAAAAAAAAAgAAAAA",
-                            "sourceData": "DAABCgABsO4m+0XxkqsKAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
+                            "controllerData": "DAACDAACDAABCgABAAAAAAAAABAAAAAA",
+                            "sourceData": "DAABCgABBZUxqlthurkKAAIAAAAAAAAAAAAIAAIAAAC0CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAQAAAAAAA="
                           }
                         }
                       }
                     }
                   },
                   {
-                    "entryId": "cursor-top-1973278249857318913",
-                    "sortIndex": "1973278249857318913",
+                    "entryId": "cursor-top-1973463933893214209",
+                    "sortIndex": "1973463933893214209",
                     "content": {
                       "__typename": "TimelineTimelineCursor",
-                      "value": "DAAHCgABG2J-HQXAJxELAAIAAAATMTk3MjcwODY0NTc1NTYxMzMxOQgAAwAAAAEAAA",
+                      "value": "DAAHCgABG2Mm_fTAJxELAAIAAAATMTk3MjcwODY0NTc1NTYxMzMxOQgAAwAAAAEAAA",
                       "cursorType": "Top"
                     }
                   },
                   {
-                    "entryId": "cursor-bottom-1973278249857318910",
-                    "sortIndex": "1973278249857318910",
+                    "entryId": "cursor-bottom-1973463933893214206",
+                    "sortIndex": "1973463933893214206",
                     "content": {
                       "__typename": "TimelineTimelineCursor",
-                      "value": "DAAHCgABG2J-HQW___4LAAIAAAATMTk3MjcwODY0NTc1NTYxMzMxOQgAAwAAAAIAAA",
+                      "value": "DAAHCgABG2Mm_fS___4LAAIAAAATMTk3MjcwODY0NTc1NTYxMzMxOQgAAwAAAAIAAA",
                       "cursorType": "Bottom"
                     }
                   }
