@@ -1,0 +1,568 @@
+{
+  "data": {
+    "user": {
+      "result": {
+        "__typename": "User",
+        "timeline": {
+          "timeline": {
+            "instructions": [
+              {
+                "type": "TimelineClearCache"
+              },
+              {
+                "type": "TimelineTerminateTimeline",
+                "direction": "Top"
+              },
+              {
+                "type": "TimelineTerminateTimeline",
+                "direction": "Bottom"
+              },
+              {
+                "type": "TimelineAddEntries",
+                "entries": [
+                  {
+                    "entryId": "user-247174365",
+                    "sortIndex": "1973301228318228480",
+                    "content": {
+                      "entryType": "TimelineTimelineItem",
+                      "__typename": "TimelineTimelineItem",
+                      "itemContent": {
+                        "itemType": "TimelineUser",
+                        "__typename": "TimelineUser",
+                        "user_results": {
+                          "result": {
+                            "__typename": "User",
+                            "id": "VXNlcjoyNDcxNzQzNjU=",
+                            "rest_id": "247174365",
+                            "affiliates_highlighted_label": {},
+                            "avatar": {
+                              "image_url": "https://pbs.twimg.com/profile_images/1816581748987236353/aOgmuy0U_normal.jpg"
+                            },
+                            "core": {
+                              "created_at": "Fri Feb 04 07:14:42 +0000 2011",
+                              "name": "Lina Hidalgo",
+                              "screen_name": "LinaHidalgoTX"
+                            },
+                            "dm_permissions": {
+                              "can_dm": true,
+                              "can_dm_on_xchat": false
+                            },
+                            "has_graduated_access": true,
+                            "is_blue_verified": true,
+                            "legacy": {
+                              "default_profile": true,
+                              "default_profile_image": false,
+                              "description": "Harris County Judge (executive of nation’s third-largest county). Progressive. Texan.. Ironman triathlete. Proud immigrant. Official: @HarrisCoJudge",
+                              "entities": {
+                                "description": {
+                                  "urls": []
+                                },
+                                "url": {
+                                  "urls": [
+                                    {
+                                      "display_url": "LinaHidalgo.com",
+                                      "expanded_url": "http://www.LinaHidalgo.com",
+                                      "url": "https://t.co/MRJhbu1L7Y",
+                                      "indices": [
+                                        0,
+                                        23
+                                      ]
+                                    }
+                                  ]
+                                }
+                              },
+                              "fast_followers_count": 0,
+                              "favourites_count": 1548,
+                              "followers_count": 164377,
+                              "friends_count": 676,
+                              "has_custom_timelines": true,
+                              "is_translator": false,
+                              "listed_count": 735,
+                              "media_count": 1314,
+                              "normal_followers_count": 164377,
+                              "pinned_tweet_ids_str": [
+                                "1967992033404129730"
+                              ],
+                              "possibly_sensitive": false,
+                              "profile_banner_url": "https://pbs.twimg.com/profile_banners/247174365/1720214978",
+                              "profile_interstitial_type": "",
+                              "statuses_count": 5043,
+                              "translator_type": "none",
+                              "url": "https://t.co/MRJhbu1L7Y",
+                              "want_retweets": true,
+                              "withheld_in_countries": []
+                            },
+                            "location": {
+                              "location": "Harris County, TX"
+                            },
+                            "media_permissions": {
+                              "can_media_tag": true
+                            },
+                            "parody_commentary_fan_label": "None",
+                            "profile_image_shape": "Circle",
+                            "privacy": {
+                              "protected": false
+                            },
+                            "relationship_perspectives": {
+                              "following": true
+                            },
+                            "tipjar_settings": {},
+                            "verification": {
+                              "verified": false
+                            }
+                          }
+                        },
+                        "userDisplayType": "User"
+                      },
+                      "clientEventInfo": {
+                        "component": "FollowingSgs",
+                        "element": "user"
+                      }
+                    }
+                  },
+                  {
+                    "entryId": "user-1092181103979446272",
+                    "sortIndex": "1973301228318228479",
+                    "content": {
+                      "entryType": "TimelineTimelineItem",
+                      "__typename": "TimelineTimelineItem",
+                      "itemContent": {
+                        "itemType": "TimelineUser",
+                        "__typename": "TimelineUser",
+                        "user_results": {
+                          "result": {
+                            "__typename": "User",
+                            "id": "VXNlcjoxMDkyMTgxMTAzOTc5NDQ2Mjcy",
+                            "rest_id": "1092181103979446272",
+                            "affiliates_highlighted_label": {},
+                            "avatar": {
+                              "image_url": "https://pbs.twimg.com/profile_images/1967712210693570560/GbHQPH4d_normal.jpg"
+                            },
+                            "core": {
+                              "created_at": "Sun Feb 03 22:00:41 +0000 2019",
+                              "name": "Beni Rae Harmony",
+                              "screen_name": "BeniRaeHarmony"
+                            },
+                            "dm_permissions": {
+                              "can_dm": true,
+                              "can_dm_on_xchat": false
+                            },
+                            "has_graduated_access": true,
+                            "is_blue_verified": true,
+                            "legacy": {
+                              "default_profile": true,
+                              "default_profile_image": false,
+                              "description": "Former TV Host/ Reporter @Wics_abc20 @FoxIllinois & Former Radio Host @997themix",
+                              "entities": {
+                                "description": {
+                                  "urls": []
+                                }
+                              },
+                              "fast_followers_count": 0,
+                              "favourites_count": 1105,
+                              "followers_count": 65364,
+                              "friends_count": 178,
+                              "has_custom_timelines": false,
+                              "is_translator": false,
+                              "listed_count": 40,
+                              "media_count": 10,
+                              "normal_followers_count": 65364,
+                              "pinned_tweet_ids_str": [
+                                "1967716797915787669"
+                              ],
+                              "possibly_sensitive": false,
+                              "profile_banner_url": "https://pbs.twimg.com/profile_banners/1092181103979446272/1752011579",
+                              "profile_interstitial_type": "",
+                              "statuses_count": 300,
+                              "translator_type": "none",
+                              "want_retweets": true,
+                              "withheld_in_countries": []
+                            },
+                            "location": {
+                              "location": "Springfield, IL"
+                            },
+                            "media_permissions": {
+                              "can_media_tag": true
+                            },
+                            "parody_commentary_fan_label": "None",
+                            "profile_image_shape": "Circle",
+                            "professional": {
+                              "rest_id": "1967702020434903139",
+                              "professional_type": "Creator",
+                              "category": [
+                                {
+                                  "id": 955,
+                                  "name": "Journalist",
+                                  "icon_name": "IconBriefcaseStroke"
+                                }
+                              ]
+                            },
+                            "privacy": {
+                              "protected": false
+                            },
+                            "relationship_perspectives": {
+                              "following": true
+                            },
+                            "tipjar_settings": {},
+                            "verification": {
+                              "verified": false
+                            }
+                          }
+                        },
+                        "userDisplayType": "User"
+                      },
+                      "clientEventInfo": {
+                        "component": "FollowingSgs",
+                        "element": "user"
+                      }
+                    }
+                  },
+                  {
+                    "entryId": "user-1389231554438836231",
+                    "sortIndex": "1973301228318228478",
+                    "content": {
+                      "entryType": "TimelineTimelineItem",
+                      "__typename": "TimelineTimelineItem",
+                      "itemContent": {
+                        "itemType": "TimelineUser",
+                        "__typename": "TimelineUser",
+                        "user_results": {
+                          "result": {
+                            "__typename": "User",
+                            "id": "VXNlcjoxMzg5MjMxNTU0NDM4ODM2MjMx",
+                            "rest_id": "1389231554438836231",
+                            "affiliates_highlighted_label": {},
+                            "avatar": {
+                              "image_url": "https://pbs.twimg.com/profile_images/1611068139361472552/LhCaatqF_normal.jpg"
+                            },
+                            "core": {
+                              "created_at": "Mon May 03 14:54:03 +0000 2021",
+                              "name": "tinyman.algo",
+                              "screen_name": "tinymanorg"
+                            },
+                            "dm_permissions": {
+                              "can_dm": true,
+                              "can_dm_on_xchat": false
+                            },
+                            "has_graduated_access": true,
+                            "is_blue_verified": true,
+                            "legacy": {
+                              "default_profile": true,
+                              "default_profile_image": false,
+                              "description": "Tinyman is a decentralized trading protocol on the Algorand blockchain, creating an open and safe marketplace for traders, liquidity providers, and developers.",
+                              "entities": {
+                                "description": {
+                                  "urls": []
+                                },
+                                "url": {
+                                  "urls": [
+                                    {
+                                      "display_url": "tinyman.org",
+                                      "expanded_url": "http://www.tinyman.org",
+                                      "url": "https://t.co/qPIO0LfwGd",
+                                      "indices": [
+                                        0,
+                                        23
+                                      ]
+                                    }
+                                  ]
+                                }
+                              },
+                              "fast_followers_count": 0,
+                              "favourites_count": 2816,
+                              "followers_count": 41803,
+                              "friends_count": 245,
+                              "has_custom_timelines": true,
+                              "is_translator": false,
+                              "listed_count": 324,
+                              "media_count": 475,
+                              "normal_followers_count": 41803,
+                              "pinned_tweet_ids_str": [
+                                "1968659087043772924"
+                              ],
+                              "possibly_sensitive": false,
+                              "profile_banner_url": "https://pbs.twimg.com/profile_banners/1389231554438836231/1719404416",
+                              "profile_interstitial_type": "",
+                              "statuses_count": 1239,
+                              "translator_type": "none",
+                              "url": "https://t.co/qPIO0LfwGd",
+                              "want_retweets": true,
+                              "withheld_in_countries": []
+                            },
+                            "location": {
+                              "location": ""
+                            },
+                            "media_permissions": {
+                              "can_media_tag": true
+                            },
+                            "parody_commentary_fan_label": "None",
+                            "profile_image_shape": "Circle",
+                            "professional": {
+                              "rest_id": "1590792582841438209",
+                              "professional_type": "Business",
+                              "category": [
+                                {
+                                  "id": 1094,
+                                  "name": "Blockchain",
+                                  "icon_name": "IconBriefcaseStroke"
+                                }
+                              ]
+                            },
+                            "privacy": {
+                              "protected": false
+                            },
+                            "relationship_perspectives": {
+                              "following": true
+                            },
+                            "tipjar_settings": {},
+                            "verification": {
+                              "verified": false
+                            }
+                          }
+                        },
+                        "userDisplayType": "User"
+                      },
+                      "clientEventInfo": {
+                        "component": "FollowingSgs",
+                        "element": "user"
+                      }
+                    }
+                  },
+                  {
+                    "entryId": "user-227513941",
+                    "sortIndex": "1973301228318228477",
+                    "content": {
+                      "entryType": "TimelineTimelineItem",
+                      "__typename": "TimelineTimelineItem",
+                      "itemContent": {
+                        "itemType": "TimelineUser",
+                        "__typename": "TimelineUser",
+                        "user_results": {
+                          "result": {
+                            "__typename": "User",
+                            "id": "VXNlcjoyMjc1MTM5NDE=",
+                            "rest_id": "227513941",
+                            "affiliates_highlighted_label": {},
+                            "avatar": {
+                              "image_url": "https://pbs.twimg.com/profile_images/1907879465465638913/npzlCtB6_normal.jpg"
+                            },
+                            "core": {
+                              "created_at": "Fri Dec 17 01:23:43 +0000 2010",
+                              "name": "WORST TAPE",
+                              "screen_name": "Ganger4eva"
+                            },
+                            "dm_permissions": {
+                              "can_dm": false,
+                              "can_dm_on_xchat": false
+                            },
+                            "has_graduated_access": true,
+                            "is_blue_verified": true,
+                            "legacy": {
+                              "default_profile": false,
+                              "default_profile_image": false,
+                              "description": "Mgmt Book@gangerwrldtouring.com shows/feats ONLY",
+                              "entities": {
+                                "description": {
+                                  "urls": []
+                                },
+                                "url": {
+                                  "urls": [
+                                    {
+                                      "display_url": "gangerworldwide.com/collections/all",
+                                      "expanded_url": "https://gangerworldwide.com/collections/all",
+                                      "url": "https://t.co/1WrEvpvhm9",
+                                      "indices": [
+                                        0,
+                                        23
+                                      ]
+                                    }
+                                  ]
+                                }
+                              },
+                              "fast_followers_count": 0,
+                              "favourites_count": 1106,
+                              "followers_count": 128386,
+                              "friends_count": 275,
+                              "has_custom_timelines": true,
+                              "is_translator": false,
+                              "listed_count": 36,
+                              "media_count": 622,
+                              "normal_followers_count": 128386,
+                              "pinned_tweet_ids_str": [],
+                              "possibly_sensitive": false,
+                              "profile_banner_url": "https://pbs.twimg.com/profile_banners/227513941/1700040983",
+                              "profile_interstitial_type": "",
+                              "statuses_count": 34365,
+                              "translator_type": "none",
+                              "url": "https://t.co/1WrEvpvhm9",
+                              "want_retweets": true,
+                              "withheld_in_countries": []
+                            },
+                            "location": {
+                              "location": "IonWntlovegivemeCodeine&Digits"
+                            },
+                            "media_permissions": {
+                              "can_media_tag": true
+                            },
+                            "parody_commentary_fan_label": "None",
+                            "profile_image_shape": "Circle",
+                            "privacy": {
+                              "protected": false
+                            },
+                            "relationship_perspectives": {
+                              "following": true
+                            },
+                            "tipjar_settings": {},
+                            "verification": {
+                              "verified": false
+                            }
+                          }
+                        },
+                        "userDisplayType": "User"
+                      },
+                      "clientEventInfo": {
+                        "component": "FollowingSgs",
+                        "element": "user"
+                      }
+                    }
+                  },
+                  {
+                    "entryId": "user-1659764713616441344",
+                    "sortIndex": "1973301228318228476",
+                    "content": {
+                      "entryType": "TimelineTimelineItem",
+                      "__typename": "TimelineTimelineItem",
+                      "itemContent": {
+                        "itemType": "TimelineUser",
+                        "__typename": "TimelineUser",
+                        "user_results": {
+                          "result": {
+                            "__typename": "User",
+                            "id": "VXNlcjoxNjU5NzY0NzEzNjE2NDQxMzQ0",
+                            "rest_id": "1659764713616441344",
+                            "affiliates_highlighted_label": {},
+                            "avatar": {
+                              "image_url": "https://pbs.twimg.com/profile_images/1814502901534150656/JLNpoz0c_normal.jpg"
+                            },
+                            "core": {
+                              "created_at": "Sat May 20 03:35:30 +0000 2023",
+                              "name": "Path of Men",
+                              "screen_name": "PathOfMen_"
+                            },
+                            "dm_permissions": {
+                              "can_dm": true,
+                              "can_dm_on_xchat": false
+                            },
+                            "has_graduated_access": true,
+                            "is_blue_verified": true,
+                            "legacy": {
+                              "default_profile": true,
+                              "default_profile_image": false,
+                              "description": "become a better you | Join FREE Telegram: https://t.co/EsYuhGCYoa",
+                              "entities": {
+                                "description": {
+                                  "urls": [
+                                    {
+                                      "display_url": "telegram.me/TheMenBuilder",
+                                      "expanded_url": "http://telegram.me/TheMenBuilder",
+                                      "url": "https://t.co/EsYuhGCYoa",
+                                      "indices": [
+                                        42,
+                                        65
+                                      ]
+                                    }
+                                  ]
+                                },
+                                "url": {
+                                  "urls": [
+                                    {
+                                      "display_url": "gumroad.com/a/713597139/EL…",
+                                      "expanded_url": "https://gumroad.com/a/713597139/ELJgH",
+                                      "url": "https://t.co/6nCGF7fbaB",
+                                      "indices": [
+                                        0,
+                                        23
+                                      ]
+                                    }
+                                  ]
+                                }
+                              },
+                              "fast_followers_count": 0,
+                              "favourites_count": 14632,
+                              "followers_count": 483596,
+                              "friends_count": 18,
+                              "has_custom_timelines": false,
+                              "is_translator": false,
+                              "listed_count": 506,
+                              "media_count": 1609,
+                              "normal_followers_count": 483596,
+                              "pinned_tweet_ids_str": [
+                                "1929485736786416067"
+                              ],
+                              "possibly_sensitive": false,
+                              "profile_banner_url": "https://pbs.twimg.com/profile_banners/1659764713616441344/1737083965",
+                              "profile_interstitial_type": "",
+                              "statuses_count": 4066,
+                              "translator_type": "none",
+                              "url": "https://t.co/6nCGF7fbaB",
+                              "want_retweets": true,
+                              "withheld_in_countries": []
+                            },
+                            "location": {
+                              "location": "Quit Porn:"
+                            },
+                            "media_permissions": {
+                              "can_media_tag": true
+                            },
+                            "parody_commentary_fan_label": "None",
+                            "profile_image_shape": "Circle",
+                            "privacy": {
+                              "protected": false
+                            },
+                            "relationship_perspectives": {
+                              "following": true
+                            },
+                            "tipjar_settings": {},
+                            "super_follow_eligible": true,
+                            "verification": {
+                              "verified": false
+                            }
+                          }
+                        },
+                        "userDisplayType": "User"
+                      },
+                      "clientEventInfo": {
+                        "component": "FollowingSgs",
+                        "element": "user"
+                      }
+                    }
+                  },
+                  {
+                    "entryId": "cursor-bottom-1973301228318228475",
+                    "sortIndex": "1973301228318228475",
+                    "content": {
+                      "entryType": "TimelineTimelineCursor",
+                      "__typename": "TimelineTimelineCursor",
+                      "value": "0|1973301228318228473",
+                      "cursorType": "Bottom"
+                    }
+                  },
+                  {
+                    "entryId": "cursor-top-1973301228318228481",
+                    "sortIndex": "1973301228318228481",
+                    "content": {
+                      "entryType": "TimelineTimelineCursor",
+                      "__typename": "TimelineTimelineCursor",
+                      "value": "-1|1973301228318228481",
+                      "cursorType": "Top"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

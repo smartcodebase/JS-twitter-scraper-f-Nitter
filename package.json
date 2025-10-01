@@ -1,0 +1,25 @@
+{
+  "name": "nitter-js-scraper",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Minimal Node.js scraper that fetches tweets for a specific user via X GraphQL endpoints using OAuth1",
+  "main": "src/cli.js",
+  "bin": {
+    "nitter-scrape": "src/cli.js"
+  },
+  "scripts": {
+    "start": "node src/cli.js",
+    "fetch": "node src/cli.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "oauth-1.0a": "^2.2.6",
+    "undici": "^6.19.8",
+    "yargs": "^17.7.2",
+    "puppeteer": "^22.0.0",
+    "otplib": "^12.0.1"
+  }
+}
+
+
+

@@ -1,0 +1,458 @@
+{
+  "data": {
+    "user_result": {
+      "result": {
+        "timeline_response": {
+          "id": "VGltZWxpbmU6CgBdG2BfDUma0AAA",
+          "timeline": {
+            "instructions": [
+              {
+                "__typename": "TimelineClearCache"
+              },
+              {
+                "__typename": "TimelineAddEntries",
+                "entries": [
+                  {
+                    "entryId": "tweet-1972708645755613319",
+                    "sortIndex": "1973278249857318912",
+                    "content": {
+                      "__typename": "TimelineTimelineItem",
+                      "content": {
+                        "__typename": "TimelineTweet",
+                        "tweetResult": {
+                          "result": {
+                            "__typename": "Tweet",
+                            "rest_id": "1972708645755613319",
+                            "legacy": {
+                              "conversation_id_str": "1972708645755613319",
+                              "created_at": "Mon Sep 29 17:02:46 +0000 2025",
+                              "display_text_range": [
+                                0,
+                                26
+                              ],
+                              "entities": {
+                                "hashtags": [],
+                                "symbols": [],
+                                "urls": [],
+                                "user_mentions": []
+                              },
+                              "favorite_count": 0,
+                              "favorited": false,
+                              "full_text": "I am a software developer.",
+                              "is_quote_status": false,
+                              "lang": "en",
+                              "quote_count": 0,
+                              "reply_count": 0,
+                              "retweet_count": 0,
+                              "retweeted": false,
+                              "user_id_str": "1972681147462373376",
+                              "bookmarked": false,
+                              "bookmark_count": 0
+                            },
+                            "core": {
+                              "user_result": {
+                                "result": {
+                                  "__typename": "User",
+                                  "rest_id": "1972681147462373376",
+                                  "is_blue_verified": false,
+                                  "affiliates_highlighted_label": {},
+                                  "legacy": {
+                                    "can_dm": true,
+                                    "can_media_tag": true,
+                                    "advertiser_account_service_levels": [],
+                                    "advertiser_account_type": "none",
+                                    "analytics_type": "disabled",
+                                    "created_at": "Mon Sep 29 15:13:39 +0000 2025",
+                                    "description": "WEB and Blcokchain Dev",
+                                    "entities": {
+                                      "description": {
+                                        "hashtags": [],
+                                        "symbols": [],
+                                        "urls": [],
+                                        "user_mentions": []
+                                      }
+                                    },
+                                    "fast_followers_count": 0,
+                                    "favourites_count": 0,
+                                    "followers_count": 0,
+                                    "friends_count": 5,
+                                    "geo_enabled": false,
+                                    "has_custom_timelines": false,
+                                    "has_extended_profile": true,
+                                    "id_str": "1972681147462373376",
+                                    "is_translator": false,
+                                    "location": "",
+                                    "media_count": 0,
+                                    "name": "webcupid",
+                                    "needs_phone_verification": false,
+                                    "normal_followers_count": 0,
+                                    "pinned_tweet_ids_str": [],
+                                    "profile_background_color": "F5F8FA",
+                                    "profile_image_url_https": "https://pbs.twimg.com/profile_images/1972681349535514624/hM0Rvi6c_normal.jpg",
+                                    "profile_interstitial_type": "",
+                                    "profile_link_color": "1DA1F2",
+                                    "protected": false,
+                                    "screen_name": "webcupid95625",
+                                    "statuses_count": 1,
+                                    "suspended": false,
+                                    "translator_type_enum": "None",
+                                    "verified": false,
+                                    "withheld_in_countries": []
+                                  }
+                                }
+                              }
+                            },
+                            "unmention_info": {},
+                            "quick_promote_eligibility": {
+                              "eligibility": "IneligibleNotProfessional"
+                            },
+                            "conversation_muted": false,
+                            "is_translatable": false
+                          }
+                        },
+                        "tweetDisplayType": "Tweet"
+                      },
+                      "clientEventInfo": {
+                        "component": "organic_tweets",
+                        "element": "tweet"
+                      }
+                    }
+                  },
+                  {
+                    "entryId": "who-to-follow-1973278249857318913",
+                    "sortIndex": "1973278249857318911",
+                    "content": {
+                      "__typename": "TimelineTimelineModule",
+                      "items": [
+                        {
+                          "entryId": "who-to-follow-1973278249857318913-user-2347578973",
+                          "item": {
+                            "content": {
+                              "__typename": "TimelineUser",
+                              "userResult": {
+                                "result": {
+                                  "__typename": "User",
+                                  "rest_id": "2347578973",
+                                  "is_blue_verified": false,
+                                  "affiliates_highlighted_label": {},
+                                  "legacy": {
+                                    "can_dm": false,
+                                    "can_media_tag": true,
+                                    "advertiser_account_service_levels": [
+                                      "analytics"
+                                    ],
+                                    "advertiser_account_type": "promotable_user",
+                                    "analytics_type": "enabled",
+                                    "created_at": "Sun Feb 16 23:18:16 +0000 2014",
+                                    "description": "",
+                                    "entities": {
+                                      "url": {
+                                        "urls": [
+                                          {
+                                            "display_url": "kencarson.xyz/tour/",
+                                            "expanded_url": "https://www.kencarson.xyz/tour/",
+                                            "indices": [
+                                              0,
+                                              23
+                                            ],
+                                            "url": "https://t.co/Zn2O0tN4vW"
+                                          }
+                                        ]
+                                      },
+                                      "description": {
+                                        "hashtags": [],
+                                        "symbols": [],
+                                        "urls": [],
+                                        "user_mentions": []
+                                      }
+                                    },
+                                    "fast_followers_count": 0,
+                                    "favourites_count": 6370,
+                                    "followers_count": 509931,
+                                    "friends_count": 18,
+                                    "geo_enabled": true,
+                                    "has_custom_timelines": true,
+                                    "has_extended_profile": true,
+                                    "id_str": "2347578973",
+                                    "is_translator": false,
+                                    "location": "",
+                                    "media_count": 344,
+                                    "name": "𐕣",
+                                    "normal_followers_count": 509931,
+                                    "pinned_tweet_ids_str": [],
+                                    "profile_background_color": "000000",
+                                    "profile_banner_url": "https://pbs.twimg.com/profile_banners/2347578973/1743726254",
+                                    "profile_image_url_https": "https://pbs.twimg.com/profile_images/1933307093764722688/WqNQqTuU_normal.jpg",
+                                    "profile_interstitial_type": "",
+                                    "profile_link_color": "91D2FA",
+                                    "protected": false,
+                                    "screen_name": "kencarson",
+                                    "statuses_count": 23126,
+                                    "translator_type_enum": "None",
+                                    "url": "https://t.co/Zn2O0tN4vW",
+                                    "verified": false,
+                                    "withheld_in_countries": []
+                                  }
+                                }
+                              },
+                              "userDisplayType": "User"
+                            },
+                            "clientEventInfo": {
+                              "component": "suggest_who_to_follow",
+                              "element": "user",
+                              "details": {
+                                "timelinesDetails": {
+                                  "injectionType": "WhoToFollow",
+                                  "controllerData": "DAACDAACDAABCgABAAAAAAAAAAgAAAAA",
+                                  "sourceData": "DAABCgABsO4m+0XxkqsKAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "entryId": "who-to-follow-1973278249857318913-user-1483866479279759362",
+                          "item": {
+                            "content": {
+                              "__typename": "TimelineUser",
+                              "userResult": {
+                                "result": {
+                                  "__typename": "User",
+                                  "rest_id": "1483866479279759362",
+                                  "is_blue_verified": true,
+                                  "affiliates_highlighted_label": {},
+                                  "legacy": {
+                                    "can_dm": true,
+                                    "can_media_tag": true,
+                                    "advertiser_account_service_levels": [
+                                      "analytics"
+                                    ],
+                                    "advertiser_account_type": "promotable_user",
+                                    "analytics_type": "disabled",
+                                    "created_at": "Wed Jan 19 18:18:43 +0000 2022",
+                                    "description": "Learn seduction and game. Get a girl. Or many. Become the man you should be. Creator of @Flirtingbot",
+                                    "entities": {
+                                      "url": {
+                                        "urls": [
+                                          {
+                                            "display_url": "bio.link/seducehertoday",
+                                            "expanded_url": "https://bio.link/seducehertoday",
+                                            "indices": [
+                                              0,
+                                              23
+                                            ],
+                                            "url": "https://t.co/3ibUkBEEdZ"
+                                          }
+                                        ]
+                                      },
+                                      "description": {
+                                        "hashtags": [],
+                                        "symbols": [],
+                                        "urls": [],
+                                        "user_mentions": [
+                                          {
+                                            "id_str": "0",
+                                            "indices": [
+                                              88,
+                                              100
+                                            ],
+                                            "name": "",
+                                            "screen_name": "Flirtingbot"
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    "fast_followers_count": 0,
+                                    "favourites_count": 66843,
+                                    "followers_count": 224550,
+                                    "friends_count": 264,
+                                    "geo_enabled": true,
+                                    "has_custom_timelines": true,
+                                    "has_extended_profile": true,
+                                    "id_str": "1483866479279759362",
+                                    "is_translator": false,
+                                    "location": "Get Hotter Girls 👉",
+                                    "media_count": 1328,
+                                    "name": "Seduce Her Today 💦💦",
+                                    "normal_followers_count": 224550,
+                                    "pinned_tweet_ids_str": [
+                                      "1943316991416373677"
+                                    ],
+                                    "profile_background_color": "F5F8FA",
+                                    "profile_banner_url": "https://pbs.twimg.com/profile_banners/1483866479279759362/1679424192",
+                                    "profile_image_url_https": "https://pbs.twimg.com/profile_images/1491830873607393281/_9ptc-Xk_normal.jpg",
+                                    "profile_interstitial_type": "",
+                                    "profile_link_color": "1DA1F2",
+                                    "protected": false,
+                                    "screen_name": "SeduceHerToday",
+                                    "statuses_count": 20020,
+                                    "translator_type_enum": "None",
+                                    "url": "https://t.co/3ibUkBEEdZ",
+                                    "verified": false,
+                                    "withheld_in_countries": []
+                                  }
+                                }
+                              },
+                              "userDisplayType": "User"
+                            },
+                            "clientEventInfo": {
+                              "component": "suggest_who_to_follow",
+                              "element": "user",
+                              "details": {
+                                "timelinesDetails": {
+                                  "injectionType": "WhoToFollow",
+                                  "controllerData": "DAACDAACDAABCgABAAAAAAAAAAgAAAAA",
+                                  "sourceData": "DAABCgABsO4m+0XxkqsKAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "entryId": "who-to-follow-1973278249857318913-user-4898921697",
+                          "item": {
+                            "content": {
+                              "__typename": "TimelineUser",
+                              "userResult": {
+                                "result": {
+                                  "__typename": "User",
+                                  "rest_id": "4898921697",
+                                  "is_blue_verified": true,
+                                  "affiliates_highlighted_label": {},
+                                  "legacy": {
+                                    "can_dm": true,
+                                    "can_media_tag": true,
+                                    "advertiser_account_service_levels": [
+                                      "dso",
+                                      "dso",
+                                      "smb"
+                                    ],
+                                    "advertiser_account_type": "promotable_user",
+                                    "analytics_type": "enabled",
+                                    "created_at": "Thu Feb 11 19:24:43 +0000 2016",
+                                    "description": "ROAD TO PARADISE STARTS NOW... 8/8\n\nBooking & Inquiries: BookYoungNudy@gmail.com",
+                                    "entities": {
+                                      "url": {
+                                        "urls": [
+                                          {
+                                            "display_url": "youngnudy.lnk.to/Paradise",
+                                            "expanded_url": "https://youngnudy.lnk.to/Paradise",
+                                            "indices": [
+                                              0,
+                                              23
+                                            ],
+                                            "url": "https://t.co/5nYdoCtKOY"
+                                          }
+                                        ]
+                                      },
+                                      "description": {
+                                        "hashtags": [],
+                                        "symbols": [],
+                                        "urls": [],
+                                        "user_mentions": []
+                                      }
+                                    },
+                                    "fast_followers_count": 0,
+                                    "favourites_count": 792,
+                                    "followers_count": 259282,
+                                    "friends_count": 70,
+                                    "geo_enabled": true,
+                                    "has_custom_timelines": true,
+                                    "has_extended_profile": true,
+                                    "id_str": "4898921697",
+                                    "is_translator": false,
+                                    "location": "East Atlanta",
+                                    "media_count": 562,
+                                    "name": "Big Bad Slime",
+                                    "normal_followers_count": 259282,
+                                    "pinned_tweet_ids_str": [
+                                      "1953698045775814779"
+                                    ],
+                                    "profile_background_color": "F5F8FA",
+                                    "profile_banner_url": "https://pbs.twimg.com/profile_banners/4898921697/1752825823",
+                                    "profile_image_url_https": "https://pbs.twimg.com/profile_images/1856826988758986752/0g84k__W_normal.jpg",
+                                    "profile_interstitial_type": "",
+                                    "profile_link_color": "1DA1F2",
+                                    "protected": false,
+                                    "screen_name": "PDE_YOUNGNUDY",
+                                    "statuses_count": 2647,
+                                    "translator_type_enum": "None",
+                                    "url": "https://t.co/5nYdoCtKOY",
+                                    "verified": false,
+                                    "withheld_in_countries": []
+                                  }
+                                }
+                              },
+                              "userDisplayType": "User"
+                            },
+                            "clientEventInfo": {
+                              "component": "suggest_who_to_follow",
+                              "element": "user",
+                              "details": {
+                                "timelinesDetails": {
+                                  "injectionType": "WhoToFollow",
+                                  "controllerData": "DAACDAACDAABCgABAAAAAAAAAAgAAAAA",
+                                  "sourceData": "DAABCgABsO4m+0XxkqsKAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ],
+                      "header": {
+                        "text": "Who to follow",
+                        "sticky": false
+                      },
+                      "footer": {
+                        "text": "Show more",
+                        "landingUrl": {
+                          "url": "twitter://connect_people?user_id=1972681147462373376&display_location=profile_wtf_showmore",
+                          "urlType": "DeepLink"
+                        },
+                        "displayType": "Classic"
+                      },
+                      "moduleDisplayType": "Vertical",
+                      "clientEventInfo": {
+                        "component": "suggest_who_to_follow",
+                        "details": {
+                          "timelinesDetails": {
+                            "injectionType": "WhoToFollow",
+                            "controllerData": "DAACDAACDAABCgABAAAAAAAAAAgAAAAA",
+                            "sourceData": "DAABCgABsO4m+0XxkqsKAAIAAAAAAAAAAAAIAAIAAAB1CAADAAAAAgwABQwAAgwAAgwAAQoAAQAAAAAAAAAIAAAAAAA="
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "entryId": "cursor-top-1973278249857318913",
+                    "sortIndex": "1973278249857318913",
+                    "content": {
+                      "__typename": "TimelineTimelineCursor",
+                      "value": "DAAHCgABG2J-HQXAJxELAAIAAAATMTk3MjcwODY0NTc1NTYxMzMxOQgAAwAAAAEAAA",
+                      "cursorType": "Top"
+                    }
+                  },
+                  {
+                    "entryId": "cursor-bottom-1973278249857318910",
+                    "sortIndex": "1973278249857318910",
+                    "content": {
+                      "__typename": "TimelineTimelineCursor",
+                      "value": "DAAHCgABG2J-HQW___4LAAIAAAATMTk3MjcwODY0NTc1NTYxMzMxOQgAAwAAAAIAAA",
+                      "cursorType": "Bottom"
+                    }
+                  }
+                ]
+              }
+            ],
+            "metadata": {
+              "scribeConfig": {
+                "page": "profileBest"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
