@@ -32,6 +32,16 @@ Scenario 2: Valid File but Expired Cookies (401 Error)
     Retries API call: Uses the new valid cookies
     Updates cache: Saves new cookies to file
 The Complete Flow:
+    1. Try cached cookies from file
+    ↓ (if file invalid/not found)
+    2. Extract fresh cookies from Chrome
+    ↓ (if API fails with 401)
+    3. Refresh cookies from Chrome
+    ↓
+    4. Retry API call with new cookies
+    ↓
+    5. Save new cookies to file
+
 Key Benefits:
 Automatic Recovery: No manual intervention needed
 Always Works: Even if Twitter changes cookies frequently
