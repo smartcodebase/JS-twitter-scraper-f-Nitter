@@ -80,14 +80,14 @@ async function main() {
         console.error('OAuth1 API succeeded')
       } catch (e) {
         console.error('OAuth1 API failed:', e.message)
-        if (webCredentials) {
-          // Option 2: Automatic cookie refresh
+        if (argv.webAuthToken && argv.webCt0) {
+          // Option 1: Manual web cookies
+          console.error('Using provided web cookies...')
+          data = await client.getUserFollowersWeb(user.rest_id, { cursor: argv.cursor, authToken: argv.webAuthToken, ct0: argv.webCt0 })
+        } else if (webCredentials || true) {
+          // Option 2: Automatic cookie refresh (try existing Chrome session first)
           console.error('Falling back to web authentication...')
           data = await client.getUserFollowersWithRefresh(user.rest_id, { cursor: argv.cursor })
-        } else if (argv.webAuthToken && argv.webCt0) {
-          // Option 1: Manual cookies
-          console.error('Falling back to manual web cookies...')
-          data = await client.getUserFollowersWeb(user.rest_id, { cursor: argv.cursor, authToken: argv.webAuthToken, ct0: argv.webCt0 })
         } else {
           console.error('No fallback options available. Please provide either:')
           console.error('1. OAuth credentials in .env file, or')
@@ -105,14 +105,14 @@ async function main() {
         console.error('OAuth1 API succeeded')
       } catch (e) {
         console.error('OAuth1 API failed:', e.message)
-        if (webCredentials) {
-          // Option 2: Automatic cookie refresh
+        if (argv.webAuthToken && argv.webCt0) {
+          // Option 1: Manual web cookies
+          console.error('Using provided web cookies...')
+          data = await client.getUserFollowingWeb(user.rest_id, { cursor: argv.cursor, authToken: argv.webAuthToken, ct0: argv.webCt0 })
+        } else if (webCredentials || true) {
+          // Option 2: Automatic cookie refresh (try existing Chrome session first)
           console.error('Falling back to web authentication...')
           data = await client.getUserFollowingWithRefresh(user.rest_id, { cursor: argv.cursor })
-        } else if (argv.webAuthToken && argv.webCt0) {
-          // Option 1: Manual cookies
-          console.error('Falling back to manual web cookies...')
-          data = await client.getUserFollowingWeb(user.rest_id, { cursor: argv.cursor, authToken: argv.webAuthToken, ct0: argv.webCt0 })
         } else {
           console.error('No fallback options available. Please provide either:')
           console.error('1. OAuth credentials in .env file, or')

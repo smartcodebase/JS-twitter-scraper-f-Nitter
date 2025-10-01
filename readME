@@ -1,0 +1,15 @@
+Option 1: Manual Cookies
+Behavior: Uses the provided cookies directly
+Message: "Using provided web cookies..."
+
+    node src/cli.js webcupid95625 --following \
+  --webAuthToken "your_auth_token" \
+  --webCt0 "your_ct0_token" \
+  --out following.json
+
+Option 2: Automatic Cookie Extraction
+Behavior: Extracts cookies from your existing Chrome session
+Message: "Falling back to web authentication..." → "Attempting to extract cookies from existing Chrome session..."
+
+node src/cli.js webcupid95625 --following \
+  --out following.json

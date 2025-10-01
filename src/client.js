@@ -223,10 +223,71 @@ export class XClient {
     return this.getWeb(url, { authToken, ct0 })
   }
 
+  // ===== Extract cookies from existing Chrome session =====
+  async getCookiesFromExistingChrome() {
+    console.error('Connecting to existing Chrome session...')
+    
+    // Try to connect to existing Chrome instance
+    const browser = await puppeteer.connect({
+      browserURL: 'http://localhost:9222', // Default Chrome debugging port
+      defaultViewport: null
+    })
+    
+    try {
+      const pages = await browser.pages()
+      let xPage = null
+      
+      // Look for a page that's on X.com
+      for (const page of pages) {
+        const url = page.url()
+        if (url.includes('x.com') || url.includes('twitter.com')) {
+          xPage = page
+          console.error(`Found X.com page: ${url}`)
+          break
+        }
+      }
+      
+      // If no X.com page found, create a new one and navigate
+      if (!xPage) {
+        console.error('No X.com page found, creating new page...')
+        xPage = await browser.newPage()
+        await xPage.goto('https://x.com/', { waitUntil: 'networkidle2', timeout: 30000 })
+      }
+      
+      // Wait a moment for any dynamic content to load
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      
+      console.error('Extracting cookies...')
+      const cookies = await xPage.cookies()
+      const authToken = cookies.find(c => c.name === 'auth_token')?.value
+      const ct0 = cookies.find(c => c.name === 'ct0')?.value
+      
+      if (!authToken || !ct0) {
+        console.error('Available cookies:', cookies.map(c => `${c.name}=${c.value.substring(0, 20)}...`))
+        throw new Error('Failed to extract auth_token or ct0 from existing Chrome session. Make sure you are logged into X.com in Chrome.')
+      }
+      
+      console.error('Successfully extracted cookies from existing Chrome session')
+      return { authToken, ct0 }
+    } finally {
+      // Don't close the browser since it's an existing session
+      await browser.disconnect()
+    }
+  }
+
   // ===== Automatic cookie refresh via Puppeteer =====
   async getFreshWebCookies() {
+    // First try to get cookies from existing Chrome session
+    try {
+      console.error('Attempting to extract cookies from existing Chrome session...')
+      return await this.getCookiesFromExistingChrome()
+    } catch (e) {
+      console.error('Failed to extract from existing Chrome session:', e.message)
+      console.error('Falling back to automated login...')
+    }
+
     if (!this.webCredentials) {
-      throw new Error('Web credentials required for automatic cookie refresh')
+      throw new Error('Web credentials required for automatic cookie refresh when no existing Chrome session is available')
     }
 
     console.error('Launching browser for cookie refresh...')
@@ -274,164 +335,84 @@ export class XClient {
   }
 
   async _performLogin(page) {
-    console.error('Navigating to login page...')
-    await page.goto('https://x.com/i/flow/login', { waitUntil: 'networkidle2', timeout: 30000 })
+    console.error('Navigating to X.com homepage...')
+    await page.goto('https://x.com/', { waitUntil: 'networkidle2', timeout: 30000 })
     
-    // Wait for the page to fully load and any dynamic content to render
-    await new Promise(resolve => setTimeout(resolve, 5000))
-    
-    // Wait for any input elements to appear
-    try {
-      await page.waitForSelector('input', { timeout: 10000 })
-      console.error('Input elements found after waiting')
-    } catch (e) {
-      console.error('No input elements found even after waiting:', e.message)
-    }
+    // Wait for the page to fully load
+    await new Promise(resolve => setTimeout(resolve, 3000))
     
     // Take a screenshot for debugging
     await page.screenshot({ path: 'login-page.png' })
     console.error('Screenshot saved as login-page.png')
     
-    // Get page content for debugging
-    const pageContent = await page.content()
-    console.error('Page title:', await page.title())
-    console.error('Page URL:', page.url())
+    console.error('Looking for Sign In button...')
+    // Try multiple selectors for Sign In button
+    const signInSelectors = [
+      'a[href="/login"]',
+      '[data-testid="loginButton"]',
+      'a:has-text("Sign in")',
+      'button:has-text("Sign in")',
+      '[role="link"]:has-text("Sign in")'
+    ]
     
-    // Check if there are any iframes that might contain the login form
-    const iframes = await page.$$('iframe')
-    console.error(`Found ${iframes.length} iframe elements`)
-    
-    // Look for any input fields
-    const allInputs = await page.$$('input')
-    console.error(`Found ${allInputs.length} input elements`)
-    
-    for (let i = 0; i < allInputs.length; i++) {
+    let signInButton = null
+    for (const selector of signInSelectors) {
       try {
-        const input = allInputs[i]
-        const type = await input.getAttribute('type')
-        const name = await input.getAttribute('name')
-        const placeholder = await input.getAttribute('placeholder')
-        const testId = await input.getAttribute('data-testid')
-        console.error(`Input ${i}: type=${type}, name=${name}, placeholder=${placeholder}, testid=${testId}`)
-      } catch (e) {
-        console.error(`Error getting attributes for input ${i}:`, e.message)
-      }
-    }
-    
-    // Check if the login form is inside an iframe
-    if (iframes.length > 0) {
-      console.error('Checking iframe content...')
-      for (let i = 0; i < iframes.length; i++) {
-        try {
-          const frame = iframes[i]
-          const frameContent = await frame.contentFrame()
-          if (frameContent) {
-            const frameInputs = await frameContent.$$('input')
-            console.error(`Iframe ${i} has ${frameInputs.length} input elements`)
-            
-            for (let j = 0; j < frameInputs.length; j++) {
-              try {
-                const input = frameInputs[j]
-                const type = await input.getAttribute('type')
-                const name = await input.getAttribute('name')
-                const placeholder = await input.getAttribute('placeholder')
-                const testId = await input.getAttribute('data-testid')
-                console.error(`Iframe ${i} Input ${j}: type=${type}, name=${name}, placeholder=${placeholder}, testid=${testId}`)
-              } catch (e) {
-                console.error(`Error getting attributes for iframe ${i} input ${j}:`, e.message)
-              }
-            }
-          }
-        } catch (e) {
-          console.error(`Error accessing iframe ${i}:`, e.message)
+        signInButton = await page.waitForSelector(selector, { timeout: 5000 })
+        if (signInButton) {
+          console.error(`Found Sign In button with selector: ${selector}`)
+          break
         }
-      }
-    }
-    
-    // Look for any buttons or clickable elements
-    const buttons = await page.$$('button, [role="button"], div[onclick]')
-    console.error(`Found ${buttons.length} button elements`)
-    
-    for (let i = 0; i < Math.min(buttons.length, 10); i++) {
-      try {
-        const button = buttons[i]
-        const text = await button.evaluate(el => el.textContent)
-        const testId = await button.evaluate(el => el.getAttribute('data-testid'))
-        console.error(`Button ${i}: text="${text?.trim()}", testid=${testId}`)
       } catch (e) {
-        console.error(`Error getting button ${i} info:`, e.message)
+        console.error(`Sign In button selector ${selector} failed:`, e.message)
       }
     }
     
-    // Check if there's a retry button and click it
-    if (buttons.length > 0) {
-      for (let i = 0; i < buttons.length; i++) {
-        try {
-          const button = buttons[i]
-          const text = await button.evaluate(el => el.textContent)
-          if (text?.trim().toLowerCase().includes('retry')) {
-            console.error('Clicking retry button...')
-            await button.click()
-            await new Promise(resolve => setTimeout(resolve, 3000))
-            
-            // Check for inputs again after retry
-            const newInputs = await page.$$('input')
-            console.error(`Found ${newInputs.length} input elements after retry`)
-            break
-          }
-        } catch (e) {
-          console.error(`Error checking button ${i}:`, e.message)
-        }
-      }
+    if (!signInButton) {
+      throw new Error('Could not find Sign In button')
     }
-
-    console.error('Looking for username input...')
-    // Try multiple selectors for username input based on the new login flow
+    
+    console.error('Clicking Sign In button...')
+    await signInButton.click()
+    
+    // Wait for the modal to appear
+    await new Promise(resolve => setTimeout(resolve, 3000))
+    
+    console.error('Looking for username input in modal...')
+    // Try multiple selectors for username input in the modal
     const usernameSelectors = [
       'input[placeholder*="Phone, email, or username" i]',
-      'input[placeholder*="username" i]',
-      'input[placeholder*="phone" i]',
-      'input[placeholder*="email" i]',
       'input[name="text"]',
       'input[autocomplete="username"]',
-      'input[data-testid="ocfEnterTextTextInput"]',
       'input[type="text"]'
     ]
     
     let usernameInput = null
     for (const selector of usernameSelectors) {
       try {
-        usernameInput = await page.waitForSelector(selector, { timeout: 5000 })
+        usernameInput = await page.waitForSelector(selector, { timeout: 10000 })
         if (usernameInput) {
           console.error(`Found username input with selector: ${selector}`)
           break
         }
       } catch (e) {
-        console.error(`Selector ${selector} failed:`, e.message)
+        console.error(`Username input selector ${selector} failed:`, e.message)
       }
     }
     
     if (!usernameInput) {
-      // Try to find any text input that might be the username field
-      const textInputs = await page.$$('input[type="text"]')
-      if (textInputs.length > 0) {
-        usernameInput = textInputs[0]
-        console.error('Using first text input as username field')
-      } else {
-        throw new Error('Could not find username input field')
-      }
+      throw new Error('Could not find username input field in modal')
     }
     
+    console.error('Typing username...')
     await usernameInput.type(this.webCredentials.username)
     
-    console.error('Looking for Next button...')
-    // Try multiple selectors for Next button
+    console.error('Looking for Next button in modal...')
+    // Try multiple selectors for Next button in the modal
     const nextSelectors = [
-      '[role="button"]:has-text("Next")',
       'button:has-text("Next")',
-      '[data-testid="ocfEnterTextNextButton"]',
-      'button[type="submit"]',
-      'div[role="button"]:has-text("Next")',
+      '[role="button"]:has-text("Next")',
+      'button[type="button"]:has-text("Next")',
       'span:has-text("Next")'
     ]
     
@@ -449,11 +430,16 @@ export class XClient {
     }
     
     if (nextButton) {
+      console.error('Clicking Next button...')
       await nextButton.click()
     } else {
       // Try pressing Enter as fallback
+      console.error('Next button not found, trying Enter key...')
       await usernameInput.press('Enter')
     }
+    
+    // Wait for the next step (password input)
+    await new Promise(resolve => setTimeout(resolve, 3000))
     
     console.error('Looking for password input...')
     await page.waitForSelector('input[name="password"]', { timeout: 15000 })
@@ -482,9 +468,11 @@ export class XClient {
     }
     
     if (loginButton) {
+      console.error('Clicking login button...')
       await loginButton.click()
     } else {
       // Try pressing Enter as fallback
+      console.error('Login button not found, trying Enter key...')
       await page.keyboard.press('Enter')
     }
     
@@ -524,9 +512,6 @@ export class XClient {
   async getUserFollowingWithRefresh(restId, { cursor = '', authToken, ct0 } = {}) {
     // If no authToken/ct0 provided, get fresh cookies first
     if (!authToken || !ct0) {
-      if (!this.webCredentials) {
-        throw new Error('Web credentials required for automatic cookie refresh')
-      }
       console.error('Getting fresh web cookies...')
       const fresh = await this.getFreshWebCookies()
       return await this.getUserFollowingWeb(restId, { cursor, ...fresh })
@@ -535,7 +520,7 @@ export class XClient {
     try {
       return await this.getUserFollowingWeb(restId, { cursor, authToken, ct0 })
     } catch (e) {
-      if (e.statusCode === 401 && this.webCredentials) {
+      if (e.statusCode === 401) {
         console.error('Web session expired, refreshing cookies...')
         const fresh = await this.getFreshWebCookies()
         return await this.getUserFollowingWeb(restId, { cursor, ...fresh })
@@ -547,9 +532,6 @@ export class XClient {
   async getUserFollowersWithRefresh(restId, { cursor = '', authToken, ct0 } = {}) {
     // If no authToken/ct0 provided, get fresh cookies first
     if (!authToken || !ct0) {
-      if (!this.webCredentials) {
-        throw new Error('Web credentials required for automatic cookie refresh')
-      }
       console.error('Getting fresh web cookies...')
       const fresh = await this.getFreshWebCookies()
       return await this.getUserFollowersWeb(restId, { cursor, ...fresh })
@@ -558,7 +540,7 @@ export class XClient {
     try {
       return await this.getUserFollowersWeb(restId, { cursor, authToken, ct0 })
     } catch (e) {
-      if (e.statusCode === 401 && this.webCredentials) {
+      if (e.statusCode === 401) {
         console.error('Web session expired, refreshing cookies...')
         const fresh = await this.getFreshWebCookies()
         return await this.getUserFollowersWeb(restId, { cursor, ...fresh })
