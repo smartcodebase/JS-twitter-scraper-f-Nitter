@@ -229,57 +229,295 @@ export class XClient {
       throw new Error('Web credentials required for automatic cookie refresh')
     }
 
+    console.error('Launching browser for cookie refresh...')
     const browser = await puppeteer.launch({ 
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
+      headless: false, // Run in non-headless mode to see what's happening
+      args: [
+        '--no-sandbox', 
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-accelerated-2d-canvas',
+        '--no-first-run',
+        '--no-zygote',
+        '--disable-gpu',
+        '--disable-blink-features=AutomationControlled',
+        '--disable-features=VizDisplayCompositor'
+      ]
     })
     
     try {
       const page = await browser.newPage()
       await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36')
       
-      // Go to login page
-      await page.goto('https://x.com/login', { waitUntil: 'networkidle2' })
+      // Add stealth measures
+      await page.evaluateOnNewDocument(() => {
+        Object.defineProperty(navigator, 'webdriver', {
+          get: () => undefined,
+        })
+      })
       
-      // Enter username
-      await page.waitForSelector('input[name="text"]', { timeout: 10000 })
-      await page.type('input[name="text"]', this.webCredentials.username)
-      await page.click('[role="button"]:has-text("Next")')
+      // Set viewport
+      await page.setViewport({ width: 1366, height: 768 })
       
-      // Wait for password field
-      await page.waitForSelector('input[name="password"]', { timeout: 10000 })
-      await page.type('input[name="password"]', this.webCredentials.password)
-      await page.click('[data-testid="LoginForm_Login_Button"]')
+      // Set a global timeout for the entire operation
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => reject(new Error('Cookie refresh timeout after 2 minutes')), 120000)
+      })
       
-      // Handle 2FA if needed
-      if (this.webCredentials.otpSecret) {
-        try {
-          await page.waitForSelector('input[data-testid="ocfEnterTextTextInput"]', { timeout: 5000 })
-          const { authenticator } = await import('otplib')
-          const token = authenticator.generate(this.webCredentials.otpSecret)
-          await page.type('input[data-testid="ocfEnterTextTextInput"]', token)
-          await page.click('[data-testid="ocfEnterTextNextButton"]')
-        } catch (e) {
-          // No 2FA or already handled
-        }
-      }
+      const cookiePromise = this._performLogin(page)
       
-      // Wait for successful login
-      await page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 30000 })
-      
-      // Extract cookies
-      const cookies = await page.cookies()
-      const authToken = cookies.find(c => c.name === 'auth_token')?.value
-      const ct0 = cookies.find(c => c.name === 'ct0')?.value
-      
-      if (!authToken || !ct0) {
-        throw new Error('Failed to extract auth_token or ct0 from cookies')
-      }
-      
-      return { authToken, ct0 }
+      const result = await Promise.race([cookiePromise, timeoutPromise])
+      return result
     } finally {
       await browser.close()
     }
+  }
+
+  async _performLogin(page) {
+    console.error('Navigating to login page...')
+    await page.goto('https://x.com/i/flow/login', { waitUntil: 'networkidle2', timeout: 30000 })
+    
+    // Wait for the page to fully load and any dynamic content to render
+    await new Promise(resolve => setTimeout(resolve, 5000))
+    
+    // Wait for any input elements to appear
+    try {
+      await page.waitForSelector('input', { timeout: 10000 })
+      console.error('Input elements found after waiting')
+    } catch (e) {
+      console.error('No input elements found even after waiting:', e.message)
+    }
+    
+    // Take a screenshot for debugging
+    await page.screenshot({ path: 'login-page.png' })
+    console.error('Screenshot saved as login-page.png')
+    
+    // Get page content for debugging
+    const pageContent = await page.content()
+    console.error('Page title:', await page.title())
+    console.error('Page URL:', page.url())
+    
+    // Check if there are any iframes that might contain the login form
+    const iframes = await page.$$('iframe')
+    console.error(`Found ${iframes.length} iframe elements`)
+    
+    // Look for any input fields
+    const allInputs = await page.$$('input')
+    console.error(`Found ${allInputs.length} input elements`)
+    
+    for (let i = 0; i < allInputs.length; i++) {
+      try {
+        const input = allInputs[i]
+        const type = await input.getAttribute('type')
+        const name = await input.getAttribute('name')
+        const placeholder = await input.getAttribute('placeholder')
+        const testId = await input.getAttribute('data-testid')
+        console.error(`Input ${i}: type=${type}, name=${name}, placeholder=${placeholder}, testid=${testId}`)
+      } catch (e) {
+        console.error(`Error getting attributes for input ${i}:`, e.message)
+      }
+    }
+    
+    // Check if the login form is inside an iframe
+    if (iframes.length > 0) {
+      console.error('Checking iframe content...')
+      for (let i = 0; i < iframes.length; i++) {
+        try {
+          const frame = iframes[i]
+          const frameContent = await frame.contentFrame()
+          if (frameContent) {
+            const frameInputs = await frameContent.$$('input')
+            console.error(`Iframe ${i} has ${frameInputs.length} input elements`)
+            
+            for (let j = 0; j < frameInputs.length; j++) {
+              try {
+                const input = frameInputs[j]
+                const type = await input.getAttribute('type')
+                const name = await input.getAttribute('name')
+                const placeholder = await input.getAttribute('placeholder')
+                const testId = await input.getAttribute('data-testid')
+                console.error(`Iframe ${i} Input ${j}: type=${type}, name=${name}, placeholder=${placeholder}, testid=${testId}`)
+              } catch (e) {
+                console.error(`Error getting attributes for iframe ${i} input ${j}:`, e.message)
+              }
+            }
+          }
+        } catch (e) {
+          console.error(`Error accessing iframe ${i}:`, e.message)
+        }
+      }
+    }
+    
+    // Look for any buttons or clickable elements
+    const buttons = await page.$$('button, [role="button"], div[onclick]')
+    console.error(`Found ${buttons.length} button elements`)
+    
+    for (let i = 0; i < Math.min(buttons.length, 10); i++) {
+      try {
+        const button = buttons[i]
+        const text = await button.evaluate(el => el.textContent)
+        const testId = await button.evaluate(el => el.getAttribute('data-testid'))
+        console.error(`Button ${i}: text="${text?.trim()}", testid=${testId}`)
+      } catch (e) {
+        console.error(`Error getting button ${i} info:`, e.message)
+      }
+    }
+    
+    // Check if there's a retry button and click it
+    if (buttons.length > 0) {
+      for (let i = 0; i < buttons.length; i++) {
+        try {
+          const button = buttons[i]
+          const text = await button.evaluate(el => el.textContent)
+          if (text?.trim().toLowerCase().includes('retry')) {
+            console.error('Clicking retry button...')
+            await button.click()
+            await new Promise(resolve => setTimeout(resolve, 3000))
+            
+            // Check for inputs again after retry
+            const newInputs = await page.$$('input')
+            console.error(`Found ${newInputs.length} input elements after retry`)
+            break
+          }
+        } catch (e) {
+          console.error(`Error checking button ${i}:`, e.message)
+        }
+      }
+    }
+
+    console.error('Looking for username input...')
+    // Try multiple selectors for username input based on the new login flow
+    const usernameSelectors = [
+      'input[placeholder*="Phone, email, or username" i]',
+      'input[placeholder*="username" i]',
+      'input[placeholder*="phone" i]',
+      'input[placeholder*="email" i]',
+      'input[name="text"]',
+      'input[autocomplete="username"]',
+      'input[data-testid="ocfEnterTextTextInput"]',
+      'input[type="text"]'
+    ]
+    
+    let usernameInput = null
+    for (const selector of usernameSelectors) {
+      try {
+        usernameInput = await page.waitForSelector(selector, { timeout: 5000 })
+        if (usernameInput) {
+          console.error(`Found username input with selector: ${selector}`)
+          break
+        }
+      } catch (e) {
+        console.error(`Selector ${selector} failed:`, e.message)
+      }
+    }
+    
+    if (!usernameInput) {
+      // Try to find any text input that might be the username field
+      const textInputs = await page.$$('input[type="text"]')
+      if (textInputs.length > 0) {
+        usernameInput = textInputs[0]
+        console.error('Using first text input as username field')
+      } else {
+        throw new Error('Could not find username input field')
+      }
+    }
+    
+    await usernameInput.type(this.webCredentials.username)
+    
+    console.error('Looking for Next button...')
+    // Try multiple selectors for Next button
+    const nextSelectors = [
+      '[role="button"]:has-text("Next")',
+      'button:has-text("Next")',
+      '[data-testid="ocfEnterTextNextButton"]',
+      'button[type="submit"]',
+      'div[role="button"]:has-text("Next")',
+      'span:has-text("Next")'
+    ]
+    
+    let nextButton = null
+    for (const selector of nextSelectors) {
+      try {
+        nextButton = await page.waitForSelector(selector, { timeout: 5000 })
+        if (nextButton) {
+          console.error(`Found Next button with selector: ${selector}`)
+          break
+        }
+      } catch (e) {
+        console.error(`Next button selector ${selector} failed:`, e.message)
+      }
+    }
+    
+    if (nextButton) {
+      await nextButton.click()
+    } else {
+      // Try pressing Enter as fallback
+      await usernameInput.press('Enter')
+    }
+    
+    console.error('Looking for password input...')
+    await page.waitForSelector('input[name="password"]', { timeout: 15000 })
+    await page.type('input[name="password"]', this.webCredentials.password)
+    
+    console.error('Looking for login button...')
+    // Try multiple selectors for login button
+    const loginSelectors = [
+      '[data-testid="LoginForm_Login_Button"]',
+      'button:has-text("Log in")',
+      'button[type="submit"]',
+      '[role="button"]:has-text("Log in")'
+    ]
+    
+    let loginButton = null
+    for (const selector of loginSelectors) {
+      try {
+        loginButton = await page.waitForSelector(selector, { timeout: 5000 })
+        if (loginButton) {
+          console.error(`Found login button with selector: ${selector}`)
+          break
+        }
+      } catch (e) {
+        console.error(`Login button selector ${selector} failed:`, e.message)
+      }
+    }
+    
+    if (loginButton) {
+      await loginButton.click()
+    } else {
+      // Try pressing Enter as fallback
+      await page.keyboard.press('Enter')
+    }
+    
+    // Handle 2FA if needed
+    if (this.webCredentials.otpSecret) {
+      try {
+        console.error('Looking for 2FA input...')
+        await page.waitForSelector('input[data-testid="ocfEnterTextTextInput"]', { timeout: 10000 })
+        const { authenticator } = await import('otplib')
+        const token = authenticator.generate(this.webCredentials.otpSecret)
+        await page.type('input[data-testid="ocfEnterTextTextInput"]', token)
+        await page.click('[data-testid="ocfEnterTextNextButton"]')
+        console.error('2FA code entered')
+      } catch (e) {
+        console.error('No 2FA required or 2FA failed:', e.message)
+      }
+    }
+    
+    console.error('Waiting for login to complete...')
+    await page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 30000 })
+    
+    console.error('Extracting cookies...')
+    const cookies = await page.cookies()
+    const authToken = cookies.find(c => c.name === 'auth_token')?.value
+    const ct0 = cookies.find(c => c.name === 'ct0')?.value
+    
+    if (!authToken || !ct0) {
+      console.error('Available cookies:', cookies.map(c => c.name))
+      throw new Error('Failed to extract auth_token or ct0 from cookies')
+    }
+    
+    console.error('Successfully obtained fresh cookies')
+    return { authToken, ct0 }
   }
 
   // Auto-refresh wrapper for web operations
@@ -441,7 +679,7 @@ function webFeatures() {
     longform_notetweets_consumption_enabled: true,
     responsive_web_twitter_article_tweet_consumption_enabled: true,
     tweet_awards_web_tipping_enabled: false,
-    responsive_web_grok_show_grok_translated_post: true,
+    responsive_web_grok_show_grok_translated_post: false,
     responsive_web_grok_analysis_button_from_backend: true,
     creator_subscriptions_quote_tweet_preview_enabled: false,
     freedom_of_speech_not_reach_fetch_enabled: true,
@@ -450,7 +688,7 @@ function webFeatures() {
     longform_notetweets_rich_text_read_enabled: true,
     longform_notetweets_inline_media_enabled: true,
     responsive_web_grok_image_annotation_enabled: true,
-    responsive_web_grok_imagine_annotation_enabled: true,
+    responsive_web_grok_imagine_annotation_enabled: false,
     responsive_web_grok_community_note_auto_translation_is_enabled: false,
     responsive_web_enhance_cards_enabled: false,
   })
